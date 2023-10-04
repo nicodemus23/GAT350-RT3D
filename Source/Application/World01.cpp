@@ -25,7 +25,7 @@ namespace nc
     {
         for (int i = 0; i < 10; i++)
         {
-            m_angle += 45 * dt;
+            m_angle += 90 * dt;
             m_position.x += ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_A) ? -dt : 0;
             m_position.x += ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_D) ? +dt : 0;
             m_position.y += ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_W) ? -dt : 0;
