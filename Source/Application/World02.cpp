@@ -43,8 +43,10 @@ namespace nc
         // vertex data
         float positionData[] = {
         -0.8f, -0.8f, 0.0f,
-         0.8f, -0.8f, 0.0f,
-         0.0f,  0.8f, 0.0f
+         -0.8f, 0.8f, 0.0f,
+         0.8f,  -0.8f, 0.0f,
+         0.8f,  0.8f, 0.0f
+         
         };
 
         // color data
@@ -52,10 +54,11 @@ namespace nc
         {
             1.0f, 0.0f, 0.0f,
             0.0f, 1.0f, 0.0f,
-            0.0f, 0.0f, 1.0f
+            0.0f, 0.0f, 1.0f,
+            1.0f, 1.0f, 1.0f
         };
    
-        //buffer - unsigned int vertex buffer object 
+        // stores vertex data in GPU memory
         GLuint vbo[2];
 
         // create buffer object
@@ -117,7 +120,7 @@ namespace nc
 
         // render
         glBindVertexArray(m_vao);
-        glDrawArrays(GL_TRIANGLES, 0, 3);
+        glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
        
 
         // post-render
