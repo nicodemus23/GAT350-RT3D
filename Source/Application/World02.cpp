@@ -2,11 +2,15 @@
 #include "Framework/Framework.h"
 #include "Input/InputSystem.h"
 
+//#define INTERLEAVE // preprocessor directive // interleaved buffers organize related data together {position, color} instead of {position} {color}
+#define INDEX
+
+
 namespace nc
 {
     bool World02::Initialize()
     {   
-        // shaders 
+        // shaders  // vertex = plural vertices // vertex attributes = position, color, normals, etc. 
         const char* vertexShader =
             "#version 430\n"
             "layout (location=0) in vec3 position;"
@@ -40,6 +44,92 @@ namespace nc
         glLinkProgram(program);
         glUseProgram(program);
 
+#ifdef INTERLEAVE
+        // vertex data
+        float vertexData[] = {
+        -0.8f, -0.8f, 0.0f, 1.0f, 0.0f, 0.0f,
+         -0.8f, 0.8f, 0.0f, 0.0f, 1.0f, 0.0f,
+         0.8f,  -0.8f, 0.0f, 0.0f, 0.0f, 1.0f,
+         0.8f,  0.8f, 0.0f, 1.0f, 1.0f, 1.0f
+
+        };
+
+
+        // stores vertex data in GPU memory
+        GLuint vbo;
+
+        // create buffer object
+        glGenBuffers(1, &vbo); // pass back index/handle
+
+        // bind buffer // ARRAY BUFFER is array of data 
+        glBindBuffer(GL_ARRAY_BUFFER, vbo);
+
+        // set data
+        glBufferData(GL_ARRAY_BUFFER, sizeof(vertexData), vertexData, GL_STATIC_DRAW);
+      
+        // vao holds all the data for our object 
+        glGenVertexArrays(1, &m_vao);
+        glBindVertexArray(m_vao);
+
+        glBindVertexBuffer(0, vbo, 0, 6 * sizeof(GLfloat)); // stride is how many bytes = 6 -> x,y,z,r,g,b
+
+        // POSITION //
+        glEnableVertexAttribArray(0);
+        glVertexAttribFormat(0, 3, GL_FLOAT, GL_FALSE, 0);  // every time we read in an object look for 3 floats for every position(vertex) - x, y, z
+        glVertexAttribBinding(0, 0); // index 0, buffer 0
+
+        // COLOR
+        glEnableVertexAttribArray(1);
+        glVertexAttribFormat(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat));  // every time we read in an object look for 3 floats for every position(vertex) - x, y, z
+        glVertexAttribBinding(1, 0); // index 0, buffer 0
+#elif defined(INDEX)
+        const float vertexData[] = {
+        -1.0f,  1.0f, 0.0f, 1.0f, 0.0f, 0.0f, // top-left
+         1.0f,  1.0f, 0.0f, 0.0f, 1.0f, 0.0f, // top-right
+         1.0f, -1.0f, 0.0f, 0.0f, 0.0f, 1.0f, // bottom-right
+        -1.0f, -1.0f, 0.0f, 1.0f, 1.0f, 1.0f  // bottom-left
+        };
+
+        GLuint indices[] =
+        {
+            0, 1, 2,
+            2, 3, 0
+        };
+
+        // vertex buffer object 
+        GLuint vbo;
+
+        // create buffer object
+        glGenBuffers(1, &vbo); 
+        // bind buffer // ARRAY BUFFER is array of data 
+        glBindBuffer(GL_ARRAY_BUFFER, vbo);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(vertexData), vertexData, GL_STATIC_DRAW);
+
+        // index buffer object
+        GLuint ibo;
+        glGenBuffers(1, &ibo);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
+
+        // vertex array object (backpack)
+        glGenVertexArrays(1, &m_vao);
+        glBindVertexArray(m_vao);
+
+        glBindVertexBuffer(0, vbo, 0, 6 * sizeof(GLfloat)); // stride is how many bytes = 6 -> x,y,z,r,g,b
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
+
+        // POSITION //
+        glEnableVertexAttribArray(0);
+        glVertexAttribFormat(0, 3, GL_FLOAT, GL_FALSE, 0);  // every time we read in an object look for 3 floats for every position(vertex) - x, y, z
+        glVertexAttribBinding(0, 0); // index 0, buffer 0
+
+        // COLOR
+        glEnableVertexAttribArray(1);
+        glVertexAttribFormat(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat));  // every time we read in an object look for 3 floats for every position(vertex) - x, y, z
+        glVertexAttribBinding(1, 0); // index 0, buffer 0
+
+#else
         // vertex data
         float positionData[] = {
         -0.8f, -0.8f, 0.0f,
@@ -90,10 +180,12 @@ namespace nc
         glEnableVertexAttribArray(1);
         glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);  // every time we read in an object look for 3 floats for every position(vertex) - x, y, z
         glBindVertexBuffer(1, vbo[1], 0, 3 * sizeof(GLfloat));
+
+#endif
          return true;
 
     }
-
+    
      
     void World02::Shutdown()
     {
@@ -120,7 +212,12 @@ namespace nc
 
         // render
         glBindVertexArray(m_vao);
-        glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+
+#ifdef INDEX
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0); // no pointer 0
+#else 
+        glDrawArrays(GL_TRIANGLE_STRIP, 0, 4); // 4 verts 
+#endif
        
 
         // post-render
