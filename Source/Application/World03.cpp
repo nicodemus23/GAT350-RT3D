@@ -119,30 +119,39 @@ namespace nc
 
     void World03::Update(float dt)
     {
-       
-            m_angle += 180 * dt;
-            m_position.x += ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_A) ? m_speed * -dt : 0;
-            m_position.x += ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_D) ? m_speed * +dt : 0;
-            m_position.z += ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_W) ? m_speed * -dt : 0; // going into screen 
-            m_position.z += ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_S) ? m_speed * +dt : 0; // coming out of screen
+            ENGINE.GetSystem<Gui>()->BeginFrame();
+
+            ImGui::Begin("Transform");
+            ImGui::DragFloat3("Position", &m_transform.position[0]);
+            ImGui::DragFloat3("Rotation", &m_transform.rotation[0]);
+            ImGui::DragFloat3("Scale", &m_transform.scale[0]);
+            ImGui::End();
+
+            m_transform.rotation.z += 180 * dt;
+
+            m_transform.position.x += ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_A) ? m_speed * -dt : 0;
+            m_transform.position.x += ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_D) ? m_speed * +dt : 0;
+            m_transform.position.z += ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_W) ? m_speed * -dt : 0; // going into screen 
+            m_transform.position.z += ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_S) ? m_speed * +dt : 0; // coming out of screen
             m_time += dt;
 
             // model matrix // translate from object space to world space 
-            glm::mat4 position = glm::translate(glm::mat4{ 1 }, m_position); // 4x4 matrix // 1 is identity matrix
-            glm::mat4 rotation = glm::rotate(glm::mat4{ 1 }, glm::radians(m_angle), glm::vec3{ 0, 0, 1 });
-            glm::mat4 model = rotation * position ;
-            GLint uniform = glGetUniformLocation(m_program->m_program, "model");
-            glUniformMatrix4fv(uniform, 1, GL_FALSE, glm::value_ptr(model));
+            //glm::mat4 position = glm::translate(glm::mat4{ 1 }, m_position); // 4x4 matrix // 1 is identity matrix
+            //glm::mat4 rotation = glm::rotate(glm::mat4{ 1 }, glm::radians(m_angle), glm::vec3{ 0, 0, 1 });
+            //glm::mat4 model = position * rotation; // rotation * position if you want the object to rotate around like the sun around the world 
+            m_program->SetUniform("model", m_transform.GetMatrix()); // SetUniform from Program.cpp
 
             // view matrix
             glm::mat4 view = glm::lookAt(glm::vec3{ 0, 4, 5 }, glm::vec3{ 0, 0, 0 }, glm::vec3{ 0, 1, 0 });
-            uniform = glGetUniformLocation(m_program->m_program, "view");
-            glUniformMatrix4fv(uniform, 1, GL_FALSE, glm::value_ptr(view));
+            m_program->SetUniform("view", view);
 
             // projection matrix - 3D
             glm::mat4 projection = glm::perspective(glm::radians(70.0f), 800.0f / 600.0f, 0.01f, 100.0f);
-            uniform = glGetUniformLocation(m_program->m_program, "projection");
-            glUniformMatrix4fv(uniform, 1, GL_FALSE, glm::value_ptr(projection));
+            m_program->SetUniform("projection", projection);
+
+            ENGINE.GetSystem<Gui>()->EndFrame();
+
+      
     }
 
     void World03::Draw(Renderer& renderer)
@@ -153,6 +162,8 @@ namespace nc
         // render
         glBindVertexArray(m_vao);
         glDrawArrays(GL_TRIANGLE_STRIP, 0, 4); // 4 verts 
+
+        ENGINE.GetSystem<Gui>()->Draw();
        
 
         // post-render

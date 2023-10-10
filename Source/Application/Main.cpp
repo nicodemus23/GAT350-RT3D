@@ -5,13 +5,15 @@
 #include "Framework/Framework.h"
 #include "Renderer/Renderer.h"
 
+// OpenGL is right-handed - positive Z comes out of the screen 
+
 using namespace std;
 
 int main(int argc, char* argv[])
 {
 	INFO_LOG("Initialize Engine...")
 
-	nc::MemoryTracker::Initialize();
+	//nc::MemoryTracker::Initialize();
 	nc::seedRandom((unsigned int)time(nullptr));
 	nc::setFilePath("assets");
 
