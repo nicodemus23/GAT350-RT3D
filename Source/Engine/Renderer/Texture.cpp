@@ -1,15 +1,16 @@
 #include "Texture.h"
 #include "Renderer.h"
 #include "Core/Logger.h"
-#include <SDL2-2.28.4/include/SDL_image.h>
+#define STB_IMAGE_IMPLEMENTATION // builds code for stb_image
+#include <stb/stb_image.h>
 
 namespace nc
 {
 	Texture::~Texture()
 	{
-		if (m_texture) SDL_DestroyTexture(m_texture);
+		if (m_texture) glDeleteTextures(1,  &m_texture); // delete 1 texture, address of texture
 	}
-
+	 
 	bool Texture::Create(std::string filename, ...)
 	{
 		va_list args;
@@ -25,31 +26,29 @@ namespace nc
 
 	bool Texture::Load(const std::string& filename, Renderer& renderer)
 	{
-		SDL_Surface* surface = IMG_Load(filename.c_str());
-		if (!surface)
-		{
-			WARNING_LOG("Could not create surface: " << filename);
-			return false;
-		}
+		int channels = 0;
 
-		m_texture = SDL_CreateTextureFromSurface(renderer.m_renderer, surface);
-		SDL_FreeSurface(surface);
-		if (!m_texture)
+		stbi_set_flip_vertically_on_load(true);
+		unsigned char* data = stbi_load(filename.c_str(), &m_size.x, &m_size.y, &channels, 0); // channels (rgb), 0 reads image for what channels exist 
+		if (!data)
 		{
-			WARNING_LOG("Could not create texture: " << filename);
+			WARNING_LOG("No data. Could not create surface: " << filename);
 			return false;
 		}
+		// 1 texture, address of texture
+		glGenTextures(1, &m_texture); 
+		// bind texture using handle
+		glBindTexture(m_target, m_texture);
+
+		GLenum internalFormat = (channels == 4) ? GL_RGBA8 : GL_RGB8;
+		GLenum format = (channels == 4) ? GL_RGBA : GL_RGB;
+
+		glTexStorage2D(m_target, 1, internalFormat, m_size.x, m_size.y);
+		glTexSubImage2D(m_target, 0, 0, 0, m_size.x, m_size.y, format, GL_UNSIGNED_BYTE, data); // data is pointer to pixels declared above
+
+		stbi_image_free(data);
+
 
 		return true;
 	}
-
-	vec2 Texture::GetSize()
-	{
-		SDL_Point point;
-		SDL_QueryTexture(m_texture, nullptr, nullptr, &point.x, &point.y);
-
-		return vec2{ point.x, point.y };
-	}
-
-
 }

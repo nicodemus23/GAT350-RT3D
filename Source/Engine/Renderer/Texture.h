@@ -1,8 +1,8 @@
 #pragma once
 #include "Framework/Resource/Resource.h"
-#include "Core/Math/Vector2.h"
+#include "glm/glm/glm.hpp"
+#include "glad/include/glad/glad.h"
 
-struct SDL_Texture;
 
 namespace nc
 {
@@ -15,11 +15,18 @@ namespace nc
 		virtual bool Create(std::string filename, ...) override;
 
 		bool Load(const std::string& filename, class Renderer& renderer);
-		vec2 GetSize();
+		const glm::ivec2& GetSize() const { return m_size; }
+
+		void SetActive(GLuint unit) { glActiveTexture(unit); }
+		void Bind() { glBindTexture(m_target, m_texture); }
 
 		friend class Renderer;
 
 	private:
-		SDL_Texture* m_texture = nullptr;
+		// texture handle
+		GLuint m_texture = 0;
+		GLenum m_target = GL_TEXTURE_2D;
+		// store texture as a glm vec2
+		glm::ivec2 m_size{0};
 	};
 }

@@ -22,6 +22,7 @@ namespace nc
 
 		GLuint m_vao;
 		res_t<Program> m_program; // resource type is shared program that can be shared among multiple objects 
+		res_t<Texture> m_texture;
 
 	};
 }
