@@ -163,6 +163,8 @@
     <None Include="..\..\Build\Assets\Shaders\unlit_color.frag" />
     <None Include="..\..\Build\Assets\Shaders\unlit_color.prog" />
     <None Include="..\..\Build\Assets\Shaders\unlit_color.vert" />
+    <None Include="..\..\Build\Assets\Shaders\unlit_multi_texture.frag" />
+    <None Include="..\..\Build\Assets\Shaders\unlit_multi_texture.prog" />
     <None Include="..\..\Build\Assets\Shaders\unlit_texture.frag" />
     <None Include="..\..\Build\Assets\Shaders\unlit_texture.prog" />
     <None Include="..\..\Build\Assets\Shaders\unlit_texture.vert" />

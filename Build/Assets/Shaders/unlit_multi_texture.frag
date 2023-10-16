@@ -11,12 +11,16 @@ uniform vec2 offset;
 uniform vec2 tiling;
 
 // this is bound to channel 0
-layout(binding = 0) uniform sampler2D tex;
+layout(binding = 0) uniform sampler2D tex1;
+layout(binding = 1) uniform sampler2D tex2;
 
 void main()
 {
 	
-	vec4 texcolor = texture(tex, (texcoord * tiling) + offset); // (sampler2D, UV) 
+	vec4 texcolor1 = texture(tex1, (texcoord * tiling) + offset); // (sampler2D, UV) 
+	vec4 texcolor2 = texture(tex2, (texcoord * tiling) + offset); // (sampler2D, UV) 
+	vec4 texcolor = mix(texcolor1, texcolor2, 0.5);
+
 	//if (texcolor.a < 0.8) discard;
 	ocolor = texcolor * color; // blend texture color with vertex color
 

@@ -10,13 +10,10 @@ namespace nc
 {
     bool World03::Initialize()
     {   
-        m_program = GET_RESOURCE(Program, "Shaders/unlit_texture.prog");
-        m_program->Use(); // sets OpenGL to use this program 
+       
+        m_material = GET_RESOURCE(Material, "Materials/quad.mtrl");
 
-        m_texture = GET_RESOURCE(Texture, "Textures/llama.jpg");
-
-        m_texture->Bind();
-        m_texture->SetActive(GL_TEXTURE0);
+    
 
 #ifdef INTERLEAVE
         // vertex data
@@ -145,19 +142,19 @@ namespace nc
 
             m_time += dt;
 
-            m_program->SetUniform("offset", glm::vec2{ m_time, 0 });
-            m_program->SetUniform("tiling", glm::vec2{ 2, 2 });
+            m_material->ProcessGui();
+            m_material->Bind();
 
             // model matrix // translate from object space to world space 
-            m_program->SetUniform("model", m_transform.GetMatrix()); // SetUniform from Program.cpp
+            m_material->GetProgram()->SetUniform("model", m_transform.GetMatrix()); // SetUniform from Program.cpp
 
             // view matrix
-            glm::mat4 view = glm::lookAt(glm::vec3{ 0, 3, 5 }, glm::vec3{ 0, 0, 0 }, glm::vec3{ 0, 1, 0 });
-            m_program->SetUniform("view", view);
+            glm::mat4 view = glm::lookAt(glm::vec3{ 0, 0, 3 }, glm::vec3{ 0, 0, 0 }, glm::vec3{ 0, 1, 0 });
+            m_material->GetProgram()->SetUniform("view", view); // SetUniform from Program.cpp
 
             // projection matrix - 3D
             glm::mat4 projection = glm::perspective(glm::radians(70.0f), 800.0f / 600.0f, 0.01f, 100.0f);
-            m_program->SetUniform("projection", projection);
+            m_material->GetProgram()->SetUniform("projection", projection); // SetUniform from Program.cpp
 
             ENGINE.GetSystem<Gui>()->EndFrame();
 
