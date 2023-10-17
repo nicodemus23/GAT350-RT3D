@@ -20,9 +20,9 @@ namespace nc
 		res_t<Program> GetProgram() { return m_program; }
 		void ProcessGui();
 	public:
-		glm::vec4 color; // rgba (vec4)
-		glm::vec2 tiling; // uv - st
-		glm::vec2 offset;
+		glm::vec4 color{ 1 }; // rgba (vec4)
+		glm::vec2 tiling{ 1, 1 }; // uv - st
+		glm::vec2 offset{ 0, 0 };
 
 	private:
 		res_t<Program> m_program;

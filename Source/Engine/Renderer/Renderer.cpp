@@ -59,12 +59,15 @@ namespace nc
 		glEnable(GL_BLEND);
 
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); // multiplication between two color values 
+
+		glEnable(GL_DEPTH_TEST); // buffer for depth of pixels
+		glDepthFunc(GL_LESS); 
 	}
 
 	void Renderer::BeginFrame()
 	{
 		glClearColor(0, 0, 0, 1);
-		glClear(GL_COLOR_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // bit mask - depth in bits 
 	}
 
 	void Renderer::EndFrame()
