@@ -10,13 +10,13 @@ namespace nc
 	bool World04::Initialize()
 
 	{
-		//auto material = GET_RESOURCE(Material, "Materials/skull.mtrl"); 
-		auto material = GET_RESOURCE(Material, "Materials/grid.mtrl"); 
+		auto material = GET_RESOURCE(Material, "Materials/skull.mtrl"); 
+		//auto material = GET_RESOURCE(Material, "Materials/grid.mtrl"); 
 		m_model = std::make_shared<Model>();
 		m_model->SetMaterial(material);
-		//m_model->Load("Models/Craniu.blend");
-		//m_model->Load("Models/buddha.obj");
-		m_model->Load("Models/sphere.obj");
+		m_model->Load("Models/Craniu.blend");
+		//m_model->Load("Models/buddha.obj", glm::vec3{ 0 }, glm::vec3{ -90, 0, 0 });
+		//m_model->Load("Models/sphere.obj", glm::vec3{0}, glm::vec3{-90, 0, 0});
 
 		return true;
 	};
@@ -30,14 +30,14 @@ namespace nc
 	{
 		ENGINE.GetSystem<Gui>()->BeginFrame();
 
-		static float ambientColor[3] = { 0.1f, 0.1f, 0.1f };
+	/*	static float ambientColor[3] = { 0.1f, 0.1f, 0.1f };
 		static float diffuseColor[3] = { 0.75f, 0.75f, 0.75f };
-		static float lightPosition[3] = { 0.0f, 8.0f, 0.0f };
+		static float lightPosition[3] = { 0.0f, 8.0f, 0.0f };*/
 
 		ImGui::Begin("Light");
-		ImGui::ColorEdit3("Ambient Color", ambientColor);
-		ImGui::ColorEdit3("Diffuse Color", diffuseColor);
-		ImGui::SliderFloat3("Light Position", lightPosition, -10.0f, 10.0f );
+		ImGui::ColorEdit3("Ambient Color", glm::value_ptr(m_ambientColor));
+		ImGui::ColorEdit3("Diffuse Color", glm::value_ptr(m_lightColor));
+		ImGui::DragFloat3("Light Position", glm::value_ptr(m_lightPosition));
 		ImGui::End(); 
 
 		ImGui::Begin("Transform");
@@ -56,16 +56,15 @@ namespace nc
 		m_time += dt;
 
 		auto material = m_model->GetMaterial();
+
 		material->ProcessGui();
 		material->Bind();
 
-		//auto material = m_model->GetMaterial();
-		material->GetProgram()->SetUniform("ambientLight", glm::make_vec3(ambientColor));
-		material->GetProgram()->SetUniform("diffuseLight", glm::make_vec3(diffuseColor));
-		material->GetProgram()->SetUniform("lightPosition", glm::make_vec3(lightPosition));
-
 		// model matrix // translate from object space to world space 
 		material->GetProgram()->SetUniform("model", m_transform.GetMatrix()); // SetUniform from Program.cpp
+		material->GetProgram()->SetUniform("ambientLight", m_ambientColor);
+		material->GetProgram()->SetUniform("light.color", m_lightColor);
+		material->GetProgram()->SetUniform("light.position", m_lightPosition);
 
 		// view matrix
 		glm::mat4 view = glm::lookAt(glm::vec3{ 0, 0, 3 }, glm::vec3{ 0, 0, 0 }, glm::vec3{ 0, 1, 0 });
@@ -84,8 +83,8 @@ namespace nc
 	{
 		// pre-render
 		//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		renderer.BeginFrame();
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 		// render
 		m_model->Draw(GL_TRIANGLES); 

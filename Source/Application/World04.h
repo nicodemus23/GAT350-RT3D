@@ -17,15 +17,14 @@ namespace nc
 
 	private:
 		float m_time = 0;
-		float m_speed = 5;
+		float m_speed = 1.1f;
+
+		glm::vec3 m_ambientColor = { 0.5f, 0.5f, 0.5f };
+		glm::vec3 m_lightColor = { 0.75f, 0.75f, 0.75f };
+		glm::vec3 m_lightPosition = { 0.0f, 8.0f, 0.0f };
 
 		Transform m_transform;
 		res_t<Model> m_model;
-
-		res_t<Program> m_program; // resource type is shared program that can be shared among multiple objects 
-		res_t<Texture> m_texture;
-		res_t<Material> m_material;
-		res_t<VertexBuffer> m_vertexBuffer;
 
 	};
 }
