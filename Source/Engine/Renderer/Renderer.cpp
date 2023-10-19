@@ -62,6 +62,11 @@ namespace nc
 
 		glEnable(GL_DEPTH_TEST); // buffer for depth of pixels
 		glDepthFunc(GL_LESS); 
+
+		// backface culling
+		glEnable(GL_CULL_FACE);
+		glCullFace(GL_BACK);
+		glFrontFace(GL_CCW); // counter-clockwise
 	}
 
 	void Renderer::BeginFrame()
