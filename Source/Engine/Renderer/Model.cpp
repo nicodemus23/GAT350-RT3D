@@ -71,7 +71,10 @@ namespace nc
 			vertex_t vertex;
 
 			vertex.position = transform * glm::vec4{ mesh->mVertices[i].x, mesh->mVertices[i].y, mesh->mVertices[i].z, 1 };
-			vertex.normal = transform * glm::vec4{ mesh->mNormals[i].x, mesh->mNormals[i].y, mesh->mNormals[i].z, 0 };
+
+			// inverse transpose of normals to maintain direction during non-uniform scaling and rotation (position vectors) (translation is a direction vector)
+			glm::mat4 normalMatrix = glm::transpose(glm::inverse(transform));
+			vertex.normal = normalMatrix * glm::vec4{ mesh->mNormals[i].x, mesh->mNormals[i].y, mesh->mNormals[i].z, 0 };
 
 			if (mesh->mTangents)
 			{

@@ -14,9 +14,15 @@ namespace nc
 		//auto material = GET_RESOURCE(Material, "Materials/grid.mtrl"); 
 		m_model = std::make_shared<Model>();
 		m_model->SetMaterial(material);
-		m_model->Load("Models/Craniu.blend");
+		m_model->Load("Models/Craniu.blend");//, glm::vec3{ 0, 0, 2.5f }, glm::vec3{-90, 0, 90});
 		//m_model->Load("Models/buddha.obj", glm::vec3{ 0 }, glm::vec3{ -90, 0, 0 });
-		//m_model->Load("Models/sphere.obj", glm::vec3{0}, glm::vec3{-90, 0, 0});
+		//m_model->Load("Models/sphere.obj", glm::vec3{ 0 }, glm::vec3{-90, 0, 0});
+		//m_model->Load("Models/plane.obj"), glm::vec3{ 0 }, glm::vec3{-90, 0, 0};
+		//m_model->Load("Models/teapot.obj"), glm::vec3{ 0, 0, -10 }, glm::vec3{-90, 0, 0};
+
+		// overrides - Light
+		m_ambientColor = glm::vec3(.093f, .073f, .123f);
+		m_lightColor = glm::vec3(1.0f, .894f, .808f);
 
 		return true;
 	};
@@ -29,10 +35,6 @@ namespace nc
 	void World04::Update(float dt)
 	{
 		ENGINE.GetSystem<Gui>()->BeginFrame();
-
-	/*	static float ambientColor[3] = { 0.1f, 0.1f, 0.1f };
-		static float diffuseColor[3] = { 0.75f, 0.75f, 0.75f };
-		static float lightPosition[3] = { 0.0f, 8.0f, 0.0f };*/
 
 		ImGui::Begin("Light");
 		ImGui::ColorEdit3("Ambient Color", glm::value_ptr(m_ambientColor));
