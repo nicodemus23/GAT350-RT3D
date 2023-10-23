@@ -11,16 +11,16 @@ namespace nc
 
 	{
 		// materials 
-		//auto material = GET_RESOURCE(Material, "Materials/skull.mtrl"); 
+		auto material = GET_RESOURCE(Material, "Materials/skull.mtrl"); 
 		//auto material = GET_RESOURCE(Material, "Materials/quad.mtrl"); 
-		auto material = GET_RESOURCE(Material, "Materials/grid.mtrl"); 
+		//auto material = GET_RESOURCE(Material, "Materials/grid.mtrl"); 
 
 		// initialize new Model object, wrap in smart pointer and set material 
 		m_model = std::make_shared<Model>(); // create new instance of Model class and returnd shared_ptr pointing to it. (smart pointer) Assigns to m_model
 		m_model->SetMaterial(material); // m_model is smart pointer pointing to Model object so can use -> to call methods on the pointed to object. Calls SetMaterial method on Model object, passing it 'material'
-		m_model->Load("Models/Craniu.blend");//, glm::vec3{ 0, 0, 2.5f }, glm::vec3{-90, 0, 90});
+		m_model->Load("Models/Craniu.blend");// {m_transform.position.x = 0, m_transform.position.y = 0, m_transform.position.z = 2; }
 		//m_model->Load("Models/buddha.obj", glm::vec3{ 0 }, glm::vec3{ -90, 0, 0 });
-		m_model->Load("Models/dragon.obj"); m_transform.position.z = -2;
+		//m_model->Load("Models/dragon.obj"); {m_transform.position.x = 0, m_transform.position.y = -6, m_transform.position.z = -15; }
 		//m_model->Load("Models/sphere.obj", glm::vec3{ 0 }, glm::vec3{-90, 0, 0});
 		//m_model->Load("Models/plane.obj");
 		//m_transform.position.y = -1;
