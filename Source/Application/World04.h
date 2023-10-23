@@ -7,6 +7,25 @@
 
 namespace nc
 {
+	struct light_t
+	{
+		enum eType
+		{
+			Point,
+			Directional,
+			Spot
+		};
+		eType type; // point, dir, spot 
+
+
+		glm::vec3 position;
+		glm::vec3 direction; // don't need direction for point light - 
+		glm::vec3 color;
+		float cutoff;
+
+	};
+
+
 	class World04 : public World
 	{
 	public:
@@ -19,9 +38,9 @@ namespace nc
 		float m_time = 0;
 		float m_speed = 1.1f;
 
+		light_t m_light;
 		glm::vec3 m_ambientColor = { 0.5f, 0.5f, 0.5f };
-		glm::vec3 m_lightColor = { 0.75f, 0.75f, 0.75f };
-		glm::vec3 m_lightPosition = { 0.0f, 8.0f, 0.0f };
+	
 
 		Transform m_transform;
 		res_t<Model> m_model;

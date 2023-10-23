@@ -75,10 +75,12 @@ namespace nc
 			// inverse transpose of normals to maintain direction during non-uniform scaling and rotation (position vectors) (translation is a direction vector)
 			glm::mat4 normalMatrix = glm::transpose(glm::inverse(transform));
 			vertex.normal = normalMatrix * glm::vec4{ mesh->mNormals[i].x, mesh->mNormals[i].y, mesh->mNormals[i].z, 0 };
+			vertex.normal = glm::normalize(transform * glm::vec4{ mesh->mNormals[i].x, mesh->mNormals[i].y, mesh->mNormals[i].z, 0 });
+
 
 			if (mesh->mTangents)
 			{
-				vertex.tangent = transform * glm::vec4{ mesh->mTangents[i].x, mesh->mTangents[i].y, mesh->mTangents[i].z, 0 };
+				vertex.tangent = glm::normalize(transform * glm::vec4{ mesh->mTangents[i].x, mesh->mTangents[i].y, mesh->mTangents[i].z, 0 });
 			}
 			else
 			{
