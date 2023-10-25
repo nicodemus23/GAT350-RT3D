@@ -27,7 +27,7 @@ namespace nc
 		void Draw(GLenum primitive = GL_TRIANGLES);
 
 		// setter for material
-		void SetMaterial(res_t<Material>& material) { m_material = material; }
+		void SetMaterial(res_t<Material> material) { m_material = material; }
 		
 		// getter for material 
 		res_t<Material> GetMaterial() { return m_material; }
