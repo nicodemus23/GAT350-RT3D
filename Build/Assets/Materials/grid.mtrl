@@ -1,6 +1,6 @@
 {
-  "program":"shaders/lit_texture.prog",
-  "textures": [ "textures/color_grid.png" ],
+  "program":"Shaders/lit_texture.prog",
+  "textures": [ "Textures/color_grid.png" ],
   "color":[
       1,
       1,

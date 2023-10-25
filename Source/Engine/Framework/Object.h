@@ -36,9 +36,12 @@ namespace nc
 
 		virtual bool Initialize() { return true; }
 		virtual void OnDestroy() {}
+		virtual void ProcessGui() {}
+
 
 	public:
 		std::string name;
 		bool active = true;
+		bool guiSelect = false;
 	};
 }

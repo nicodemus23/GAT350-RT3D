@@ -10,6 +10,9 @@ in vec3 fposition; // will receive interpolated vertex positions for each fragme
 in vec3 fnormal;
 in vec2 ftexcoord;
 
+//in layout(location = 3) vec4 fcolor; 
+//flat in layout(location = 2) vec4 fcolor; // "flat" one mormal per polygon, one lighting computuation per polygon
+
 out vec4 ocolor; // this is the pixel we draw to the screen 
 
 // this is bound to channel 0
@@ -37,25 +40,24 @@ float range;
 float innerAngle;
 float outerAngle;
 
-} light;
+} lights[3];
 
 uniform vec3 ambientLight;
+uniform int numLights = 3;
 
-vec3 ads(in vec3 position, in vec3 normal)
-{	
-	// AMBIENT lighting component
-	vec3 ambient = ambientLight;
+//layout(binding = 0) uniform sampler 2D tex;
 
-	// ATTENUATION
-	float attenuation = 1;
-	if (light.type != DIRECTIONAL)
-	{
-		float distanceSqr = dot(light.position - position, light.position - position);
-		float rangeSqr = pow(light.range, 2.0);
-		attenuation = max(0, 1 - pow((distanceSqr/rangeSqr), 2.0));
-		attenuation = pow(attenuation, 2.0);
-	}
-
+float attenuation(in vec3 position1, in vec3 position2, in float range)
+{
+	float distanceSqr = dot(position1 - position2, position1 - position2);
+	float rangeSqr = pow(range, 2.0);
+	float attenuation = max(0, 1 - pow((distanceSqr / rangeSqr), 2.0));
+	attenuation = pow(attenuation, 2.0);
+ 
+	return attenuation;
+}
+void phong(in Light light, in vec3 position, in vec3 normal, out vec3 diffuse, out vec3 specular)
+{
 	// DIFFUSE lighting component based on the light direction and surface normal 
 	vec3 lightDir = (light.type == DIRECTIONAL) ?  normalize(-light.direction) : normalize(light.position - position); 
 	
@@ -68,12 +70,12 @@ vec3 ads(in vec3 position, in vec3 normal)
 	}
 
 	float intensity = max(dot(lightDir, normal), 0) * spotIntensity;
-	vec3 diffuse = material.diffuse * (light.color * intensity) * light.intensity;
+	diffuse = material.diffuse * (light.color * intensity) * light.intensity;
 	
 
 
 	// SPECULAR lighting component, contributing only if the surface is facing the light 
-	vec3 specular = vec3(0);
+	specular = vec3(0);
 	if (intensity > 0) // checks whether the surface is facing the light source 
 	{
 		vec3 reflection = reflect(-lightDir, normal); // calculate reflection vector (which direction light bounces off surface)
@@ -82,17 +84,47 @@ vec3 ads(in vec3 position, in vec3 normal)
 		intensity = pow(intensity, material.shininess); // raise intensity to power of shininess setting in material 
 		specular = material.specular * intensity * spotIntensity * light.intensity * light.color; // final specular color (lightcolor * (material specular color * intensity)
 	}
-	// returns final light color 
-	return ambient + (diffuse + specular) * light.intensity * attenuation;
+
 }
+
+//vec3 ads(in vec3 fposition, in vec3 fnormal)
+//{	// AMBIENT lighting component
+//	vec3 ambient = ambientLight;
+//	uniform numLights = 3;
+//
+//
+//
+//	// ATTENUATION
+//	float attenuation = 1;
+//	if (light.type != DIRECTIONAL)
+//	{
+//		float distanceSqr = dot(light.position - fposition, light.position - fposition);
+//		float rangeSqr = light.range * light.range;
+//		attenuation = max(0, 1 - pow((distanceSqr/rangeSqr), 2.0));
+//		attenuation = pow(attenuation, 2.0);
+//	}
+//
+//	
+//	// returns final light color 
+//	return ambient + (diffuse + specular) * light.intensity * attenuation;
+//}
 
 void main()
 {
-	// samples a color from the texture based on texture coordinates 
-	vec4 texcolor = texture(tex, ftexcoord); 
-
-	// mult texture color with final light color, assigns to output color which is written to framebuffer 
-	ocolor = texcolor * vec4(ads(fposition, fnormal), 1);
-
+	vec4 texcolor = texture(tex, ftexcoord);
+	// set ambient light
+	ocolor = vec4(ambientLight, 1) * texcolor;
+ 
+	// set lights
+	for (int i = 0; i < numLights; i++)
+	{
+		vec3 diffuse;
+		vec3 specular;
+ 
+		float attenuation = (lights[i].type == DIRECTIONAL) ? 1 : attenuation(lights[i].position, fposition, lights[i].range);
+ 
+		phong(lights[i], fposition, fnormal, diffuse, specular);
+		ocolor += ((vec4(diffuse, 1) * texcolor) + vec4(specular, 1)) * lights[i].intensity * attenuation;
+	}
 }
 	

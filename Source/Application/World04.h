@@ -21,7 +21,10 @@ namespace nc
 		glm::vec3 position;
 		glm::vec3 direction; // don't need direction for point light - 
 		glm::vec3 color;
-		float cutoff;
+		float intensity;
+		float range;
+		float innerAngle;
+		float outerAngle;
 
 	};
 
@@ -36,14 +39,22 @@ namespace nc
 
 	private:
 		float m_time = 0;
-		float m_speed = 1.1f;
+		float m_speed = 5;
 
 		light_t m_light;
+		light_t m_lights[3];
+		int m_selected = 0;
 		glm::vec3 m_ambientColor = { 0.5f, 0.5f, 0.5f };
 	
-
 		Transform m_transform;
 		res_t<Model> m_model;
+
+		// added these back in 10.24 but don't think we need them anymore.
+		//GLuint m_vao; //Vertex Array Object
+		//res_t<Program> m_program;
+		//res_t<Texture> m_texture;
+		//res_t<Material> m_material;
+		//res_t<VertexBuffer> m_vertexBuffer;
 
 	};
 }
