@@ -15,6 +15,7 @@ namespace nc
 
 	public:
 		std::string modelName;
+		std::string materialName;
 		res_t<Model> model;
 	};
 }

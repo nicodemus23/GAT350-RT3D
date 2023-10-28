@@ -12,7 +12,10 @@ namespace nc
 
 	{
 		m_scene = std::make_unique<Scene>();
-		{
+		m_scene->Load("Scenes/scene.json");
+		m_scene->Initialize();
+
+		/*{
 			auto actor = CREATE_CLASS(Actor);
 			actor->name = "actor1";
 			actor->transform.position = glm::vec3{ 0, 0, 0 };
@@ -23,6 +26,18 @@ namespace nc
 			actor->AddComponent(std::move(modelComponent));
 			m_scene->Add(std::move(actor));
 		}
+
+		{
+			auto actor = CREATE_CLASS(Actor);
+			actor->name = "actor2";
+			actor->transform.position = glm::vec3{ 0, 0, 0 };
+			auto modelComponent = CREATE_CLASS(ModelComponent);
+			modelComponent->model = std::make_shared<Model>();
+			modelComponent->model->SetMaterial(GET_RESOURCE(Material, "materials/squirrel.mtrl"));
+			modelComponent->model->Load("models/squirrel.glb", glm::vec3{ 0, -0.7f, 0 }, glm::vec3{ 0 }, glm::vec3{ 0.4f });
+			actor->AddComponent(std::move(modelComponent));
+			m_scene->Add(std::move(actor));
+		}*/
 
 		{
 			auto actor = CREATE_CLASS(Actor);
@@ -52,10 +67,12 @@ namespace nc
 		ENGINE.GetSystem<Gui>()->BeginFrame();
 
 		m_scene->Update(dt);
-		
+		m_scene->ProcessGui();
+
 		//m_transform.rotation.z += 0 * dt;
 
 		auto actor = m_scene->GetActorByName<Actor>("actor1");
+		actor = m_scene->GetActorByName<Actor>("actor2");
 
 		actor->transform.position.x += ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_A) ? m_speed * -dt : 0;
 		actor->transform.position.x += ENGINE.GetSystem<InputSystem>()->GetKeyDown(SDL_SCANCODE_D) ? m_speed * +dt : 0;

@@ -1,5 +1,5 @@
-INFO: Factory.h(75) Class registered: ModelComponent
-INFO: Factory.h(75) Class registered: LightComponent
-INFO: Factory.h(75) Class registered: EnginePhysicsComponent
-INFO: Factory.h(75) Class registered: Actor
+INFO: Factory.h(74) Class registered: ModelComponent
+INFO: Factory.h(74) Class registered: LightComponent
+INFO: Factory.h(74) Class registered: EnginePhysicsComponent
+INFO: Factory.h(74) Class registered: Actor
 INFO: Main.cpp(16) Motor Initialisieren, bruh...
