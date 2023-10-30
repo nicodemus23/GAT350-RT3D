@@ -13,6 +13,21 @@ namespace nc
 	class Material : public Resource
 	{
 	public:
+		// texture checks // #define preprocessor directives in lit_phong.frag
+		const uint32_t ALBEDO_TEXTURE_MASK		= (1 << 0); // 0001
+		const uint32_t SPECULAR_TEXTURE_MASK	= (1 << 1); // 0010
+		const uint32_t NORMAL_TEXTURE_MASK		= (1 << 2); // 0100
+		const uint32_t EMISSIVE_TEXTURE_MASK	= (1 << 3); // 1000
+
+		// bit shifting:
+		// 0001 = ALBEDO
+		// 0010 = SPECULAR
+		// 0100 = NORMAL
+		// 1000 = EMISSIVE
+
+		// if have all 4 = 1111
+
+	public:
 		virtual bool Create(std::string filename, ...) override;
 
 		void Bind();
@@ -20,14 +35,22 @@ namespace nc
 		res_t<Program> GetProgram() { return m_program; }
 		void ProcessGui();
 	public:
-		glm::vec3 diffuse{ 1 }; 
+		uint32_t params{ 0 };
+		glm::vec3 albedo{ 1 }; 
 		glm::vec3 specular{ 1 }; 
+		glm::vec3 emissive{ 0 };
 		float shininess = 2;
+
 		glm::vec2 tiling{ 1, 1 }; // uv - st
 		glm::vec2 offset{ 0, 0 };
 
+		res_t<Texture> albedoTexture;
+		res_t<Texture> specularTexture;
+		res_t<Texture> normalTexture;
+		res_t<Texture> emissiveTexture;
+
 	private:
 		res_t<Program> m_program;
-		std::vector<res_t<Texture>> m_textures;
+		//std::vector<res_t<Texture>> m_textures;
 	};
 }

@@ -44,7 +44,7 @@ namespace nc
 		{
 			if (!actor->active) continue;
 
-			auto camera = actor->GetComponent<CameraComponent>();
+			camera = actor->GetComponent<CameraComponent>();
 			if (camera != nullptr) // if component is valid... 
 			{
 				break; // ... break out of for loop 
