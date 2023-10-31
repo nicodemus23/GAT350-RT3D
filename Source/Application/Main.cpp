@@ -15,6 +15,19 @@ int main(int argc, char* argv[])
 {
 	INFO_LOG("Motor Initialisieren, bruh...")
 
+
+	// StringUtils tests
+	std::cout << "ToUpper: " << nc::StringUtils::ToUpper("i was small but now i'm big") << std::endl;
+
+	std::cout << "ToLower: " << nc::StringUtils::ToLower("I WAS BIG BUT NOW I'M SMALL") << std::endl;
+
+	std::cout << "IsEqualIgnoreCase: " << (nc::StringUtils::IsEqualIgnoreCase("maple", "MAPLE") ? "Equal" : "Not Equal") << std::endl;
+	std::cout << "IsEqualIgnoreCase: " << (nc::StringUtils::IsEqualIgnoreCase("Neumont", "UofU") ? "Equal" : "Not Equal") << std::endl;
+
+	std::cout << "CreateUnique: " << nc::StringUtils::CreateUnique("id_") << std::endl;
+	std::cout << "CreateUnique: " << nc::StringUtils::CreateUnique("id_") << std::endl;
+	std::cout << "CreateUnique: " << nc::StringUtils::CreateUnique("id_") << std::endl;
+
 	//nc::MemoryTracker::Initialize();
 	nc::seedRandom((unsigned int)time(nullptr));
 	nc::setFilePath("assets");
