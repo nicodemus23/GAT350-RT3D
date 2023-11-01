@@ -5,7 +5,7 @@
 			"name": "actor1",
 			"persistent": true,
 			"transform": {
-				"position": [ 0, 0, 15 ],
+				"position": [ 0, 0, 45 ],
 				"scale": [ 1, 1, 1 ],
 				"rotation": [ 0, 10, 0 ]
 			},
