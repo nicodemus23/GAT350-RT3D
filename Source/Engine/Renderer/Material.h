@@ -14,10 +14,10 @@ namespace nc
 	{
 	public:
 		// texture checks // #define preprocessor directives in lit_phong.frag
-		const uint32_t ALBEDO_TEXTURE_MASK		= (1 << 0); // 0001
-		const uint32_t SPECULAR_TEXTURE_MASK	= (1 << 1); // 0010
-		const uint32_t NORMAL_TEXTURE_MASK		= (1 << 2); // 0100
-		const uint32_t EMISSIVE_TEXTURE_MASK	= (1 << 3); // 1000
+		const uint32_t ALBEDO_TEXTURE_MASK		= (1 << 0); // 0001 (bit value 1)
+		const uint32_t SPECULAR_TEXTURE_MASK	= (1 << 1); // 0010 (bit value 2)
+		const uint32_t NORMAL_TEXTURE_MASK		= (1 << 2); // 0100 (bit value 4)
+		const uint32_t EMISSIVE_TEXTURE_MASK	= (1 << 3); // 1000 (bit value 8)
 
 		// bit shifting:
 		// 0001 = ALBEDO

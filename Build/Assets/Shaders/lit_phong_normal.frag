@@ -11,14 +11,11 @@
 #define NORMAL_TEXTURE_MASK		(1 << 2)
 #define EMISSIVE_TEXTURE_MASK	(1 << 3)
 
-in vec3 fposition; // will receive interpolated vertex positions for each fragment 
-in vec3 fnormal;
-in vec2 ftexcoord;
+in layout(location = 0) vec3 fposition; // will receive interpolated vertex positions for each fragment 
+in layout(location = 1) vec2 ftexcoord;
+in layout(location = 2) mat3 ftbn;
 
-//in layout(location = 3) vec4 fcolor; 
-//flat in layout(location = 2) vec4 fcolor; // "flat" one mormal per polygon, one lighting computuation per polygon
-
-out vec4 ocolor; // this is the pixel we draw to the screen 
+out layout(location = 0) vec4 ocolor; // this is the pixel we draw to the screen 
 
 // this is bound to channel 0
 
@@ -114,9 +111,15 @@ void main()
 		vec3 specular;
  
 		float attenuation = (lights[i].type == DIRECTIONAL) ? 1 : attenuation(lights[i].position, fposition, lights[i].range);
+
+		vec3 normal = texture(normalTexture, ftexcoord).rgb;
+		normal = (normal * 2); // (0 - 1) -> (-1 - 1)
+		normal = normalize(ftbn * normal);
  
-		phong(lights[i], fposition, fnormal, diffuse, specular);
+		phong(lights[i], fposition, normal, diffuse, specular);
 		ocolor += ((vec4(diffuse, 1) * albedoColor) + (vec4(specular, 1)) * specularColor) * lights[i].intensity * attenuation;
 	}
+
+	ocolor = vec4(texture(normalTexture, ftexcoord).rgb, 1);
 }
 	

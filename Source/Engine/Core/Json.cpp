@@ -137,7 +137,7 @@ namespace nc
 	bool Json::Read(const rapidjson::Value& value, const std::string& name, glm::vec4& data, bool required)
 	{
 		// check if 'name' member exists and is an array with 4 elements
-		if (!value.HasMember(name.c_str()) || !value[name.c_str()].IsArray() || value[name.c_str()].Size() != 4)
+		if (!value.HasMember(name.c_str()) || !value[name.c_str()].IsArray() || value[name.c_str()].Size() != 3)
 		{
 			if (required) ERROR_LOG("Cannot read required json data: " << name.c_str());
 			return false;
