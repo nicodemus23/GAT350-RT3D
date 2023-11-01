@@ -119,7 +119,7 @@ void main()
 		phong(lights[i], fposition, normal, diffuse, specular);
 		ocolor += ((vec4(diffuse, 1) * albedoColor) + (vec4(specular, 1)) * specularColor) * lights[i].intensity * attenuation;
 	}
-
-	ocolor = vec4(texture(normalTexture, ftexcoord).rgb, 1);
+	// outputs just the normal map for viewing 
+	//ocolor = vec4(texture(normalTexture, ftexcoord).rgb, 1);
 }
 	

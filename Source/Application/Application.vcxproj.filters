@@ -14,6 +14,9 @@
     <Filter Include="Scenes">
       <UniqueIdentifier>{d824c5a6-0a23-448b-b389-f3191949f12c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shaders\Cubemap">
+      <UniqueIdentifier>{379c1bd4-9262-480b-b61f-2445783a2b3a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -133,6 +136,18 @@
     </None>
     <None Include="..\..\Build\Assets\Materials\ogre.mtrl">
       <Filter>Materials</Filter>
+    </None>
+    <None Include="..\..\Build\Assets\Materials\skybox.mtrl">
+      <Filter>Materials</Filter>
+    </None>
+    <None Include="..\..\Build\Assets\Shaders\skybox.prog">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="..\..\Build\Assets\Shaders\cubemap.frag">
+      <Filter>Shaders\Cubemap</Filter>
+    </None>
+    <None Include="..\..\Build\Assets\Shaders\skybox.vert">
+      <Filter>Shaders</Filter>
     </None>
   </ItemGroup>
 </Project>

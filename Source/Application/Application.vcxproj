@@ -175,8 +175,10 @@
     <None Include="..\..\Build\Assets\Materials\phong.mtrl" />
     <None Include="..\..\Build\Assets\Materials\quad.mtrl" />
     <None Include="..\..\Build\Assets\Materials\skull.mtrl" />
+    <None Include="..\..\Build\Assets\Materials\skybox.mtrl" />
     <None Include="..\..\Build\Assets\Materials\spot.mtrl" />
     <None Include="..\..\Build\Assets\Scenes\scene.json" />
+    <None Include="..\..\Build\Assets\Shaders\cubemap.frag" />
     <None Include="..\..\Build\Assets\Shaders\lit_phong.frag" />
     <None Include="..\..\Build\Assets\Shaders\lit_phong.prog" />
     <None Include="..\..\Build\Assets\Shaders\lit_phong.vert" />
@@ -187,6 +189,8 @@
     <None Include="..\..\Build\Assets\Shaders\lit_texture.prog" />
     <None Include="..\..\Build\Assets\Shaders\lit_texture.vert" />
     <None Include="..\..\Build\Assets\Shaders\multi_lit_texture.prog" />
+    <None Include="..\..\Build\Assets\Shaders\skybox.prog" />
+    <None Include="..\..\Build\Assets\Shaders\skybox.vert" />
     <None Include="..\..\Build\Assets\Shaders\unlit_color.frag" />
     <None Include="..\..\Build\Assets\Shaders\unlit_color.prog" />
     <None Include="..\..\Build\Assets\Shaders\unlit_color.vert" />

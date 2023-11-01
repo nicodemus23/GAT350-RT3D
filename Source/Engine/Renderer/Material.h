@@ -14,10 +14,11 @@ namespace nc
 	{
 	public:
 		// texture checks // #define preprocessor directives in lit_phong.frag
-		const uint32_t ALBEDO_TEXTURE_MASK		= (1 << 0); // 0001 (bit value 1)
-		const uint32_t SPECULAR_TEXTURE_MASK	= (1 << 1); // 0010 (bit value 2)
-		const uint32_t NORMAL_TEXTURE_MASK		= (1 << 2); // 0100 (bit value 4)
-		const uint32_t EMISSIVE_TEXTURE_MASK	= (1 << 3); // 1000 (bit value 8)
+		const uint32_t ALBEDO_TEXTURE_MASK		= (1 << 0); // 00001 (bit value 1)
+		const uint32_t SPECULAR_TEXTURE_MASK	= (1 << 1); // 00010 (bit value 2)
+		const uint32_t NORMAL_TEXTURE_MASK		= (1 << 2); // 00100 (bit value 4)
+		const uint32_t EMISSIVE_TEXTURE_MASK	= (1 << 3); // 01000 (bit value 8)
+		const uint32_t CUBEMAP_TEXTURE_MASK		= (1 << 4); // 10000 (bit value 16)
 
 		// bit shifting:
 		// 0001 = ALBEDO
@@ -48,6 +49,7 @@ namespace nc
 		res_t<Texture> specularTexture;
 		res_t<Texture> normalTexture;
 		res_t<Texture> emissiveTexture;
+		res_t<Texture> cubemapTexture;
 
 	private:
 		res_t<Program> m_program;

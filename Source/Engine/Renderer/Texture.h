@@ -22,9 +22,10 @@ namespace nc
 
 		friend class Renderer;
 
-	private:
+	protected:
 		// texture handle
 		GLuint m_texture = 0;
+		// default
 		GLenum m_target = GL_TEXTURE_2D;
 		// store texture as a glm vec2
 		glm::ivec2 m_size{0};
