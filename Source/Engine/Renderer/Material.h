@@ -26,7 +26,7 @@ namespace nc
 		// 0100 = NORMAL
 		// 1000 = EMISSIVE
 
-		// if have all 4 = 1111
+		// if have all 5 = 11111
 
 	public:
 		virtual bool Create(std::string filename, ...) override;
@@ -41,6 +41,7 @@ namespace nc
 		glm::vec3 specular{ 1 }; 
 		glm::vec3 emissive{ 0 };
 		float shininess = 2;
+		float reflectionIntensity = 1.0f;
 
 		glm::vec2 tiling{ 1, 1 }; // uv - st
 		glm::vec2 offset{ 0, 0 };

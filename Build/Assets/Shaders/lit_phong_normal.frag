@@ -46,6 +46,8 @@ float outerAngle;
 } lights[3];
 
 uniform vec3 ambientLight;
+uniform float ambientIntensity;
+
 uniform int numLights = 3;
 
 layout(binding = 0) uniform sampler2D albedoTexture;
@@ -84,9 +86,14 @@ void phong(in Light light, in vec3 position, in vec3 normal, out vec3 diffuse, o
 	specular = vec3(0);
 	if (intensity > 0) // checks whether the surface is facing the light source 
 	{
-		vec3 reflection = reflect(-lightDir, normal); // calculate reflection vector (which direction light bounces off surface)
 		vec3 viewDir = normalize(-position); // calc view dir vector (normalized vector pointing from frag position to camera)
-		float intensity = max(dot(reflection, viewDir), 0); // dot product of reflection vector and view direction (angle between ref vector and view vector)
+		//vec3 reflection = reflect(-lightDir, normal); // calculate reflection vector (which direction light bounces off surface)
+		//float intensity = max(dot(reflection, viewDir), 0); // dot product of reflection vector and view direction (angle between ref vector and view vector)
+
+		// blinn-phong (spec change mainly)
+		vec3 h = normalize(viewDir + lightDir); // normalize makes it a unit vector 
+		intensity = max(dot(h, normal), 0);
+
 		intensity = pow(intensity, material.shininess); // raise intensity to power of shininess setting in material 
 		specular = vec3(intensity * spotIntensity); // final specular color 
 	}
@@ -101,8 +108,8 @@ void main()
 	vec4 specularColor = bool(material.params & SPECULAR_TEXTURE_MASK) ? texture(specularTexture, ftexcoord) : vec4(material.specular, 1);
 	vec4 emissiveColor = bool(material.params & EMISSIVE_TEXTURE_MASK) ? texture(emissiveTexture, ftexcoord) : vec4(material.emissive, 1);
 
-	// set ambient light + emissive color // modulated by albedoColor
-	ocolor = vec4(ambientLight, 1) * albedoColor + emissiveColor;
+	// set ambient light + emissive color // modulated by albedoColor and ambientIntensity (ambientIntensity is my addition)
+	ocolor = vec4(ambientLight * ambientIntensity, 1) * albedoColor + emissiveColor;
  
 	// set lights
 	for (int i = 0; i < numLights; i++)

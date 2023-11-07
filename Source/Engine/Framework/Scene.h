@@ -33,6 +33,7 @@ namespace nc
 
 	public:
 		glm::vec3 ambientColor{ 0.2f };
+		float ambientIntensity{ 1.0f };
 
 	private:
 		World* m_game = nullptr;

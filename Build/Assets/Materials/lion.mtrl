@@ -1,0 +1,19 @@
+{
+  "program": "shaders/lit_phong_norm_refl.prog",
+  "albedoTexture": "Textures/LionTextures/Lion_Keystone_Diffuse.jpg",
+  "normalTexture": "Textures/LionTextures/Lion_Keystone_Normal.jpg",
+  "albedo": [
+    1,
+    1,
+    1
+  ],
+  "specular": [
+    0.4,
+    0.4,
+    0.4
+  ],
+  "shininess": 10,
+  "reflectionIntensity": 1,
+  "tiling": [ 1, 1 ],
+  "offset": [ 0, 0 ]
+}

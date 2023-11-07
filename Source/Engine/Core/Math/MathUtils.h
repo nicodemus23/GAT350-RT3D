@@ -1,6 +1,8 @@
 #pragma once
 #include <cmath>
 #include <utility>
+#include <glm/glm/glm.hpp>
+#include <glm/glm/gtc/quaternion.hpp>
 
 namespace nc
 {
@@ -10,6 +12,12 @@ namespace nc
 
 	constexpr float RadiansToDegrees(float radians) { return radians * (180.0f / Pi); }
 	constexpr float DegreesToRadians(float degrees) { return degrees * (Pi / 180.0f); }
+
+	// convert euler angles (degrees) to a quaternion
+	glm::vec3 QuaternionToEuler(const glm::quat& q);
+
+	// convert quaternion to euler angles (degrees)
+	glm::quat EulerToQuaternion(const glm::vec3& euler);
 
 	constexpr int Wrap(int value, int max)
 	{

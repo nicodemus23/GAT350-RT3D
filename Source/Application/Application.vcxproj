@@ -169,14 +169,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Build\Assets\Materials\Craniu.mtl" />
+    <None Include="..\..\Build\Assets\Materials\gear1.mtrl" />
     <None Include="..\..\Build\Assets\Materials\grid.mtrl" />
+    <None Include="..\..\Build\Assets\Materials\lion.mtrl" />
     <None Include="..\..\Build\Assets\Materials\multi.mtrl" />
     <None Include="..\..\Build\Assets\Materials\ogre.mtrl" />
+    <None Include="..\..\Build\Assets\Materials\ogre_norm_refl.mtrl" />
     <None Include="..\..\Build\Assets\Materials\phong.mtrl" />
     <None Include="..\..\Build\Assets\Materials\quad.mtrl" />
     <None Include="..\..\Build\Assets\Materials\reflection.mtrl" />
     <None Include="..\..\Build\Assets\Materials\refraction.mtrl" />
     <None Include="..\..\Build\Assets\Materials\skull.mtrl" />
+    <None Include="..\..\Build\Assets\Materials\skull_refraction.mtrl" />
     <None Include="..\..\Build\Assets\Materials\skybox.mtrl" />
     <None Include="..\..\Build\Assets\Materials\spot.mtrl" />
     <None Include="..\..\Build\Assets\Scenes\scene.json" />
@@ -187,6 +191,9 @@
     <None Include="..\..\Build\Assets\Shaders\lit_phong_normal.frag" />
     <None Include="..\..\Build\Assets\Shaders\lit_phong_normal.prog" />
     <None Include="..\..\Build\Assets\Shaders\lit_phong_normal.vert" />
+    <None Include="..\..\Build\Assets\Shaders\lit_phong_norm_refl.frag" />
+    <None Include="..\..\Build\Assets\Shaders\lit_phong_norm_refl.prog" />
+    <None Include="..\..\Build\Assets\Shaders\lit_phong_norm_refl.vert" />
     <None Include="..\..\Build\Assets\Shaders\lit_texture.frag" />
     <None Include="..\..\Build\Assets\Shaders\lit_texture.prog" />
     <None Include="..\..\Build\Assets\Shaders\lit_texture.vert" />

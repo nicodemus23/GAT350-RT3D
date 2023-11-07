@@ -1,12 +1,21 @@
 {
-  "program":"shaders/lit_texture.prog",
-  "textures": [ "textures/skull_textures_3.png" ],
-  "color":[
-      1,
-      1,
-      1,
-      1
-    ],
+  "program": "shaders/lit_phong_normal.prog",
+  "albedoTexture": "textures/SkullTextures/Craniu_vcols.tga",
+  "specularTexture": "textures/SkullTextures/Craniu_Specular.tga",
+  "normalTexture": "textures/SkullTextures/Craniu_normals.bmp",
+  "albedo": [
+    1,
+    1,
+    1
+  ],
+  "specular": [
+    0.4,
+    0.4,
+    0.4
+  ],
+  "shininess": 2,
   "tiling": [ 1, 1 ],
   "offset": [ 0, 0 ]
 }
+
+

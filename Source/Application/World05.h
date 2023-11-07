@@ -24,6 +24,8 @@ namespace nc
 		float m_speed = 5;
 		float m_refraction{ 1 };
 		glm::vec3 m_ambientColor{ 0.2f };
+		glm::vec3 m_ambientIntensity{ 1.0f };
+		glm::vec4 m_reflectedColor{ 1 };
 
 	};
 }

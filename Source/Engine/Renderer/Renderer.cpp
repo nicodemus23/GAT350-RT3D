@@ -2,6 +2,7 @@
 #include "Texture.h"
 #include <SDL2-2.28.4/include/SDL_ttf.h>
 #include <SDL2-2.28.4/include/SDL_image.h>
+#include "GLUtils.h"
 
 namespace nc
 {
@@ -33,7 +34,7 @@ namespace nc
 		m_window = SDL_CreateWindow(title.c_str(), 100, 100, width, height, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL);
 
 		// SETTING VERSIONS
-		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4); 
+		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
 		SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_COMPATIBILITY);
 
@@ -43,7 +44,12 @@ namespace nc
 		SDL_GL_SetSwapInterval(1);
 
 		m_context = SDL_GL_CreateContext(m_window);
+		// my addition: 
+		//CheckGLError();
+
 		gladLoadGL();
+		// my addition: 
+		//CheckGLError();
 
 		glEnable(GL_DEBUG_OUTPUT);
 		glDebugMessageCallback(DebugCallback, 0);
@@ -61,10 +67,12 @@ namespace nc
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); // multiplication between two color values 
 
 		glEnable(GL_DEPTH_TEST); // buffer for depth of pixels
-		glDepthFunc(GL_LESS); 
+		glDepthFunc(GL_LESS);
 
 		// backface culling
 		glEnable(GL_CULL_FACE);
+		// my addition: 
+		//CheckGLError();
 		glCullFace(GL_BACK);
 		glFrontFace(GL_CCW); // counter-clockwise
 	}
@@ -104,6 +112,8 @@ namespace nc
 	{
 		SDL_RenderDrawPointF(m_renderer, x, y);
 	}
+
+	
 
 
 	// if error, this callback is called by OpenGL

@@ -24,16 +24,17 @@
       "name": "actor1",
       "persistent": true,
       "active": true,
+      "enableDepth": false,
       "transform": {
-        "position": [ 0, 0.2, 16.2 ],
-        "scale": [ 1, 1, 1 ],
-        "rotation": [ 0, 0, 0 ]
+        "position": [ -0.9, -0.6, 16.2 ],
+        "scale": [ 0.1, 0.1, 0.1 ],
+        "rotation": [ 0, 78, 0 ]
       },
       "components": [
         {
           "type": "ModelComponent",
-          "modelName": "models/ogre.obj",
-          "materialName": "materials/refraction.mtrl"
+          "modelName": "models/Gear1.obj",
+          "materialName": "materials/gear1.mtrl"
         }
       ]
     },
@@ -42,16 +43,17 @@
       "name": "actor2",
       "persistent": true,
       "active": true,
+      "enableDepth": false,
       "transform": {
-        "position": [ -3, 0.2, 16.2 ],
+        "position": [ -1.5, -0.7, 17.8 ],
         "scale": [ 1, 1, 1 ],
-        "rotation": [ 0, 0, 0 ]
+        "rotation": [ 0, 90, -2 ]
       },
       "components": [
         {
           "type": "ModelComponent",
-          "modelName": "models/ogre.obj",
-          "materialName": "materials/reflection.mtrl"
+          "modelName": "models/bottles/glass_bottle.obj",
+          "materialName": "materials/refraction.mtrl"
         }
       ]
     },
@@ -59,19 +61,20 @@
       "type": "Actor",
       "name": "actor3",
       "persistent": true,
-      "active": true,
+      "active": false,
+      "enableDepth": false,
       "transform": {
-        "position": [ 3, 0.2, 16.2 ],
-        "scale": [ 1, 1, 1 ],
-        "rotation": [ 0, 0, 0 ]
+        "position": [ 0.4, -0.3, 17.2 ],
+        "scale": [ 0.002, 0.002, 0.002 ],
+        "rotation": [ -3, 322, 0 ]
       },
       "components": [
         {
           "type": "ModelComponent",
-          "modelName": "models/ogre.obj",
-          "materialName": "materials/ogre.mtrl"
+          "modelName": "models/LionKeystone.obj",
+          "materialName": "materials/lion.mtrl"
         }
       ]
-    }
+    } 
   ]
 }

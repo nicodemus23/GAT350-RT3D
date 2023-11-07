@@ -73,7 +73,9 @@ namespace nc
 
 
 			program->SetUniform("numLights", index);
+			glm::vec3 ambientLightColor = ambientColor * ambientIntensity;
 			program->SetUniform("ambientLight", ambientColor);
+			program->SetUniform("ambientIntensity", ambientIntensity);
 		}
 
 
@@ -144,6 +146,7 @@ namespace nc
 	{
 		ImGui::Begin("Scene");
 		ImGui::ColorEdit3("Ambient", glm::value_ptr(ambientColor));
+		ImGui::SliderFloat("Ambient Intensity", &ambientIntensity, 0.0f, 1.0f);
 		ImGui::Separator();
 
 

@@ -55,6 +55,19 @@ namespace nc
  		return true;
 	}
 
+	bool Json::Read(const rapidjson::Value& value, const std::string& name, double& data, bool required)
+	{
+		if (!value.HasMember(name.c_str()) || !value[name.c_str()].IsNumber())
+		{
+			if (required) ERROR_LOG("Cannot read required json data: " << name.c_str());
+			return false;
+		}
+
+		data = value[name.c_str()].GetFloat();
+
+		return true;
+	}
+
 	bool Json::Read(const rapidjson::Value& value, const std::string& name, bool& data, bool required)
 	{
 		if (!value.HasMember(name.c_str()) || !value[name.c_str()].IsBool())

@@ -21,6 +21,7 @@ namespace nc
 		static bool Load(const std::string& filename, rapidjson::Document& document);
 		static bool Read(const rapidjson::Value& value, const std::string& name, int& data, bool required = false);
 		static bool Read(const rapidjson::Value& value, const std::string& name, float& data, bool required = false);
+		static bool Read(const rapidjson::Value& value, const std::string& name, double& data, bool required = false);
 		static bool Read(const rapidjson::Value& value, const std::string& name, bool& data, bool required = false);
 		static bool Read(const rapidjson::Value& value, const std::string& name, std::string& data, bool required = false);
 		static bool Read(const rapidjson::Value& value, const std::string& name, glm::vec2& data, bool required = false);

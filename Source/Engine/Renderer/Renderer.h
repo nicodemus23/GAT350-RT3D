@@ -43,7 +43,7 @@ namespace nc
 		friend class Texture;
 		friend class Gui;
 
-	private:
+	protected:
 		int m_width = 0;
 		int m_height = 0;
 

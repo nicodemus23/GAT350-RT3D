@@ -11,6 +11,7 @@
 #include "Components/ModelComponent.h"
 #include "Components/LightComponent.h"
 #include "Components/CameraComponent.h"
+#include "Components/CameraController.h"
 
 #include "Components/PhysicsComponent.h"
 #include "Components/EnginePhysicsComponent.h"

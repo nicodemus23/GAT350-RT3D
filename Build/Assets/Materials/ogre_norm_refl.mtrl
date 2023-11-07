@@ -1,0 +1,25 @@
+{
+  "program": "shaders/lit_phong_norm_refl.prog",
+  "albedoTexture": "Textures/ogre_diffuse.bmp",
+  "emissiveTexture": "Textures/ogre_emissive.bmp",
+  "normalTexture": "Textures/ogre_normal.bmp",
+  "albedo": [
+    1,
+    1,
+    1
+  ],
+  "specular": [
+    0.4,
+    0.4,
+    0.4
+  ],
+  "shininess": 2,
+  "reflectionIntensity": 1.0,
+  "emissive": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "tiling": [ 1, 1 ],
+  "offset": [ 0, 0 ]
+}

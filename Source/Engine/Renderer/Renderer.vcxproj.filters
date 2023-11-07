@@ -64,6 +64,9 @@
     <ClCompile Include="Cubemap.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="GLUtils.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Renderer.h">
@@ -94,6 +97,9 @@
       <Filter>Source</Filter>
     </ClInclude>
     <ClInclude Include="Cubemap.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="GLUtils.h">
       <Filter>Source</Filter>
     </ClInclude>
   </ItemGroup>

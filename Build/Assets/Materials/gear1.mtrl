@@ -1,0 +1,20 @@
+{
+  "program": "shaders/lit_phong_norm_refl.prog",
+  "albedoTexture": "Textures/Gear_1_Textures/Gear_1_BaseColor.png",
+  "normalTexture": "Textures/Gear_1_Textures/Gear_1_Normal.png",
+  "specularTexture": "Textures/Gear_1_Textures/Gear_1_Specular.png",
+  "albedo": [
+    1,
+    1,
+    1
+  ],
+  "specular": [
+    0.4,
+    0.4,
+    0.4
+  ],
+  "shininess": 10,
+  "reflectionIntensity": 1,
+  "tiling": [ 1, 1 ],
+  "offset": [ 0, 0 ]
+}

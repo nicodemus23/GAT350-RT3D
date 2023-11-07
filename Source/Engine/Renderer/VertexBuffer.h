@@ -10,6 +10,8 @@ namespace nc
 	public:
 		VertexBuffer();
 		virtual ~VertexBuffer();
+		//VertexBuffer(Renderer& renderer);
+
 
 		bool Create(std::string name, ...) override;
 		void Draw(GLenum primitiveType = GL_TRIANGLES);
@@ -29,5 +31,8 @@ namespace nc
 		GLuint m_ibo = 0;			// index buffer object
 		GLuint m_indexCount = 0;	// number of indices index buffer
 		GLenum m_indexType = 0;		// data type of index
+		// to be able to create OpenGL context for use of error logging that I custom created
+		//Renderer& m_renderer;
+
 	};
 }
