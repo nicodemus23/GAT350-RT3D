@@ -1,4 +1,4 @@
-#include "World05.h"
+#include "World06.h"
 #include "Framework/Framework.h"
 #include "Input/InputSystem.h"
 
@@ -8,12 +8,27 @@
 
 namespace nc
 {
-	bool World05::Initialize()
+	bool World06::Initialize()
 
 	{
 		m_scene = std::make_unique<Scene>();
-		m_scene->Load("Scenes/scene.json");
+		m_scene->Load("Scenes/scene_framebuffer.json");
 		m_scene->Initialize();
+
+		auto texture = std::make_shared<Texture>();
+		texture->CreateTexture(512, 512);
+		ADD_RESOURCE("fb_texture", texture);
+
+		auto framebuffer = std::make_shared<Framebuffer>();
+		framebuffer->CreateFramebuffer(texture);
+		ADD_RESOURCE("fb", framebuffer);
+
+		auto material = GET_RESOURCE(Material, "materials/framebuffer.mtrl");
+		if (material)
+		{
+			material->albedoTexture = texture;
+		}
+
 
 		{
 			auto actor = CREATE_CLASS(Actor);
@@ -36,7 +51,7 @@ namespace nc
 			auto actor = CREATE_CLASS(Actor);
 			actor->name = "camera1";
 			actor->transform.position = glm::vec3{ 0, 0, 18 };
-		//	actor->transform.rotation = glm::radians(glm::vec3{ 0, 180, 0 });
+			actor->transform.rotation = glm::radians(glm::vec3{ 0, 180, 0 });
 
 			auto cameraComponent = CREATE_CLASS(CameraComponent);
 			cameraComponent->SetPerspective(70.0f, ENGINE.GetSystem<Renderer>()->GetWidth() / (float)ENGINE.GetSystem<Renderer>()->GetHeight(), 0.1f, 100.0f);
@@ -52,32 +67,20 @@ namespace nc
 			m_scene->Add(std::move(actor));
 		}
 
-		for (int i = 0; i < 2; i++)
-		{
-			auto actor = CREATE_CLASS_BASE(Actor, "tree");
-			actor->name = nc::CreateUnique("tree");
-			actor->transform.position = glm::vec3{ randomf(-10, 10), 0, randomf(-10, 10)};
-			actor->transform.scale = glm::vec3{ randomf(0.5f, 3.0f), randomf(0.5f, 3.0f), 0 };
-			actor->Initialize();
-			m_scene->Add(std::move(actor));
-
-		}
 		return true;
 	};
 
 		
-	void World05::Shutdown()
+	void World06::Shutdown()
 	{
 	}
 
-	void World05::Update(float dt)
+	void World06::Update(float dt)
 	{
 		ENGINE.GetSystem<Gui>()->BeginFrame();
 
 		m_scene->Update(dt);
 		m_scene->ProcessGui();
-
-		//m_transform.rotation.z += 0 * dt;
 
 		auto actor = m_scene->GetActorByName<Actor>("actor1");
 		
@@ -106,8 +109,8 @@ namespace nc
 			ImGui::End();
 		}
 
-		material->GetProgram()->SetUniform("ambientLight", m_ambientColor);
-		material->GetProgram()->SetUniform("ambientIntensity", m_ambientIntensity);
+		//material->GetProgram()->SetUniform("ambientLight", m_ambientColor);
+		//material->GetProgram()->SetUniform("ambientIntensity", m_ambientIntensity);
 
 		m_time += dt;
 
@@ -115,19 +118,32 @@ namespace nc
 
 	}
 
-	void World05::Draw(Renderer& renderer)
+	void World06::Draw(Renderer& renderer)
 	{
-		// pre-render
-		renderer.BeginFrame();
+		// *** PASS 1 *** 
+		m_scene->GetActorByName("cube")->active = false;
 
-		// render
-		//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-		//glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		auto framebuffer = GET_RESOURCE(Framebuffer, "fb");
+		renderer.SetViewport(framebuffer->GetSize().x, framebuffer->GetSize().y); 
+		framebuffer->Bind();
+
+		renderer.BeginFrame();
 		m_scene->Draw(renderer); 
 
-		ENGINE.GetSystem<Gui>()->Draw();
+		framebuffer->Unbind();
+
+		m_scene->GetActorByName("cube")->active = true;
+		//auto actor = m_scene->GetActorByName("cube");
+		//actor->active = true;
+
+		// *** PASS 2 ***
+		renderer.ResetViewport();
+		renderer.BeginFrame();
+		m_scene->Draw(renderer);
+
 
 		// post-render
+		ENGINE.GetSystem<Gui>()->Draw();
 		renderer.EndFrame();
 	}
 }

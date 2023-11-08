@@ -145,6 +145,7 @@
     <ClCompile Include="World03.cpp" />
     <ClCompile Include="World04.cpp" />
     <ClCompile Include="World05.cpp" />
+    <ClCompile Include="World06.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Engine\Core\Core.vcxproj">
@@ -166,9 +167,11 @@
     <ClInclude Include="World03.h" />
     <ClInclude Include="World04.h" />
     <ClInclude Include="World05.h" />
+    <ClInclude Include="World06.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Build\Assets\Materials\Craniu.mtl" />
+    <None Include="..\..\Build\Assets\Materials\framebuffer.mtrl" />
     <None Include="..\..\Build\Assets\Materials\gear1.mtrl" />
     <None Include="..\..\Build\Assets\Materials\grid.mtrl" />
     <None Include="..\..\Build\Assets\Materials\lion.mtrl" />
@@ -183,7 +186,10 @@
     <None Include="..\..\Build\Assets\Materials\skull_refraction.mtrl" />
     <None Include="..\..\Build\Assets\Materials\skybox.mtrl" />
     <None Include="..\..\Build\Assets\Materials\spot.mtrl" />
+    <None Include="..\..\Build\Assets\Materials\sprite.mtrl" />
+    <None Include="..\..\Build\Assets\Materials\tree.mtrl" />
     <None Include="..\..\Build\Assets\Scenes\scene.json" />
+    <None Include="..\..\Build\Assets\Scenes\scene_framebuffer.json" />
     <None Include="..\..\Build\Assets\Shaders\cubemap.frag" />
     <None Include="..\..\Build\Assets\Shaders\lit_phong.frag" />
     <None Include="..\..\Build\Assets\Shaders\lit_phong.prog" />
@@ -191,6 +197,9 @@
     <None Include="..\..\Build\Assets\Shaders\lit_phong_normal.frag" />
     <None Include="..\..\Build\Assets\Shaders\lit_phong_normal.prog" />
     <None Include="..\..\Build\Assets\Shaders\lit_phong_normal.vert" />
+    <None Include="..\..\Build\Assets\Shaders\lit_phong_normal_TEST.frag" />
+    <None Include="..\..\Build\Assets\Shaders\lit_phong_normal_TEST.prog" />
+    <None Include="..\..\Build\Assets\Shaders\lit_phong_normal_TEST.vert" />
     <None Include="..\..\Build\Assets\Shaders\lit_phong_norm_refl.frag" />
     <None Include="..\..\Build\Assets\Shaders\lit_phong_norm_refl.prog" />
     <None Include="..\..\Build\Assets\Shaders\lit_phong_norm_refl.vert" />
@@ -204,11 +213,16 @@
     <None Include="..\..\Build\Assets\Shaders\refraction.vert" />
     <None Include="..\..\Build\Assets\Shaders\skybox.prog" />
     <None Include="..\..\Build\Assets\Shaders\skybox.vert" />
+    <None Include="..\..\Build\Assets\Shaders\unlit_billboard.prog" />
+    <None Include="..\..\Build\Assets\Shaders\unlit_billboard.vert" />
     <None Include="..\..\Build\Assets\Shaders\unlit_color.frag" />
     <None Include="..\..\Build\Assets\Shaders\unlit_color.prog" />
     <None Include="..\..\Build\Assets\Shaders\unlit_color.vert" />
     <None Include="..\..\Build\Assets\Shaders\unlit_multi_texture.frag" />
     <None Include="..\..\Build\Assets\Shaders\unlit_multi_texture.prog" />
+    <None Include="..\..\Build\Assets\Shaders\unlit_sprite.frag" />
+    <None Include="..\..\Build\Assets\Shaders\unlit_sprite.prog" />
+    <None Include="..\..\Build\Assets\Shaders\unlit_sprite.vert" />
     <None Include="..\..\Build\Assets\Shaders\unlit_texture.frag" />
     <None Include="..\..\Build\Assets\Shaders\unlit_texture.prog" />
     <None Include="..\..\Build\Assets\Shaders\unlit_texture.vert" />

@@ -67,6 +67,9 @@
     <ClCompile Include="GLUtils.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="Framebuffer.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Renderer.h">
@@ -100,6 +103,9 @@
       <Filter>Source</Filter>
     </ClInclude>
     <ClInclude Include="GLUtils.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Framebuffer.h">
       <Filter>Source</Filter>
     </ClInclude>
   </ItemGroup>

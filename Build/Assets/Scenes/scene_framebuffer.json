@@ -1,0 +1,90 @@
+{
+  "actors": [
+    {
+      "type": "Actor",
+      "name": "actor1",
+      "persistent": true,
+      "active": true,
+      "enableDepth": false,
+      "transform": {
+        "position": [ -0.9, -0.6, 16.2 ],
+        "scale": [ 0.1, 0.1, 0.1 ],
+        "rotation": [ 0, 78, 0 ]
+      },
+      "components": [
+        {
+          "type": "ModelComponent",
+          "modelName": "models/Gear1.obj",
+          "materialName": "materials/gear1.mtrl"
+        },
+        {
+          "type": "RotateComponent",
+          "euler": [ 15, 45, 5 ]
+        }
+      ]
+    },
+    {
+      "type": "Actor",
+      "name": "actor2",
+      "persistent": true,
+      "active": false,
+      "transform": {
+        "position": [ -1.5, -0.7, 17.8 ],
+        "scale": [ 1, 1, 1 ],
+        "rotation": [ 0, 90, -2 ]
+      },
+      "components": [
+        {
+          "type": "ModelComponent",
+          "modelName": "models/bottles/glass_bottle.obj",
+          "materialName": "materials/refraction.mtrl",
+          "enableDepth": true
+
+        }
+      ]
+    },
+    {
+      "type": "Actor",
+      "name": "actor3",
+      "persistent": true,
+      "active": false,
+      "transform": {
+        "position": [ 0.4, -0.3, 17.2 ],
+        "scale": [ 0.002, 0.002, 0.002 ],
+        "rotation": [ -3, 322, 0 ]
+      },
+      "components": [
+        {
+          "type": "ModelComponent",
+          "modelName": "models/Gear2.obj",
+          "materialName": "materials/reflection.mtrl",
+          "enableDepth": false
+        }
+      ]
+    },
+   
+    {
+      "type": "Actor",
+      "name": "cube",
+      "persistent": true,
+      "active": true,
+      "prototype": false,
+      "transform": {
+        "position": [ 1, 0, 10 ],
+        "scale": [ 1, 1, 1 ],
+        "rotation": [ 0, 0, 0 ]
+      },
+      "components": [
+        {
+          "type": "ModelComponent",
+          "modelName": "models/cube.obj",
+          "materialName": "Materials/framebuffer.mtrl"
+        },
+        {
+          "type": "RotateComponent",
+          "euler": [15, 45, 5]
+        }
+      ]
+    }
+  ]
+}

@@ -13,9 +13,15 @@ namespace nc
 		{
 			model = GET_RESOURCE(Model, modelName);
 		}
+		else {
+			ERROR_LOG("Can't find model, yo.");
+		}
 		if (model && !materialName.empty())
 		{
 			material = (GET_RESOURCE(Material, materialName));
+		}
+		else {
+			ERROR_LOG("Can't find material, yo.");
 		}
 
 		return true;
@@ -44,7 +50,7 @@ namespace nc
 
 		std::string cullfaceName;
 		READ_NAME_DATA(value, "cullface", cullfaceName);
-		if (StringUtils::IsEqualIgnoreCase(cullfaceName, "front")) cullface = GL_FRONT;
-		if (StringUtils::IsEqualIgnoreCase(cullfaceName, "none")) cullface = GL_NONE;
+		if (IsEqualIgnoreCase(cullfaceName, "front")) cullface = GL_FRONT;
+		if (IsEqualIgnoreCase(cullfaceName, "none")) cullface = GL_NONE;
 	}
 }

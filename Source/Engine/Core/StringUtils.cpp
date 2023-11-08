@@ -5,7 +5,7 @@ namespace nc
 {	// retains its value across iterations and only accessible inside function (static) // non-negative integer // 
 	static unsigned int unique; 
 
-	std::string StringUtils::ToUpper(const std::string& input)
+	std::string ToUpper(const std::string& input)
 	{	// new string is created as a copy of input 
 		std::string str = input;
 		// transform function applies toupper function to each character in string 
@@ -15,7 +15,7 @@ namespace nc
 		return str;
 	}
 
-	std::string StringUtils::ToLower(const std::string& input)
+	std::string ToLower(const std::string& input)
 	{   // new string is created as a copy of input 
 		std::string str = input;
 		// transform function applies tolower function to each character in string 
@@ -24,7 +24,7 @@ namespace nc
 		return str;
 	}
 	// boolean operator that returns true or false based on the conditions laid out below 
-	bool StringUtils::IsEqualIgnoreCase(const std::string& str1, const std::string& str2)
+	bool IsEqualIgnoreCase(const std::string& str1, const std::string& str2)
 	{
 		{  // if string 1 is not equal to string 2, return false ...
 			if (str1.size() != str2.size())
@@ -36,7 +36,7 @@ namespace nc
 			});
 	}
 	// appends a unique number to an input string and returns the str
-	std::string StringUtils::CreateUnique(const std::string& input)
+	std::string CreateUnique(const std::string& input)
 	{	// in increments n_counter, converts to a string and appends to input string each time function is called 
 		return input + std::to_string(unique++);
 	}

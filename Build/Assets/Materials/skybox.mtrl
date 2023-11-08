@@ -1,12 +1,12 @@
 {
   "program": "shaders/skybox.prog",
-  "cubemap": "SaintPetersBasilica",
+  "cubemap": "Ryfjallet",
   "cubemaps": [
-    "textures/SaintPetersBasilica/posx.jpg",
-    "textures/SaintPetersBasilica/negx.jpg",
-    "textures/SaintPetersBasilica/posy.jpg",
-    "textures/SaintPetersBasilica/negy.jpg",
-    "textures/SaintPetersBasilica/posz.jpg",
-    "textures/SaintPetersBasilica/negz.jpg"
+    "textures/Ryfjallet/posx.jpg",
+    "textures/Ryfjallet/negx.jpg",
+    "textures/Ryfjallet/posy.jpg",
+    "textures/Ryfjallet/negy.jpg",
+    "textures/Ryfjallet/posz.jpg",
+    "textures/Ryfjallet/negz.jpg"
   ]
 }

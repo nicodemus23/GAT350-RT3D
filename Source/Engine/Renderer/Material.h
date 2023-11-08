@@ -40,8 +40,8 @@ namespace nc
 		glm::vec3 albedo{ 1 }; 
 		glm::vec3 specular{ 1 }; 
 		glm::vec3 emissive{ 0 };
+		float reflectionIntensity = 1;
 		float shininess = 2;
-		float reflectionIntensity = 1.0f;
 
 		glm::vec2 tiling{ 1, 1 }; // uv - st
 		glm::vec2 offset{ 0, 0 };

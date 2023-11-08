@@ -3,6 +3,7 @@
 #include "World03.h"
 #include "World04.h"
 #include "World05.h"
+#include "World06.h"
 #include "Core/Core.h"
 #include "Framework/Framework.h"
 #include "Renderer/Renderer.h"
@@ -17,16 +18,16 @@ int main(int argc, char* argv[])
 
 
 	// StringUtils tests
-	std::cout << "ToUpper: " << nc::StringUtils::ToUpper("i was small but now i'm big") << std::endl;
+	//std::cout << "ToUpper: " << nc::StringUtils::ToUpper("i was small but now i'm big") << std::endl;
 
-	std::cout << "ToLower: " << nc::StringUtils::ToLower("I WAS BIG BUT NOW I'M SMALL") << std::endl;
+	//std::cout << "ToLower: " << nc::StringUtils::ToLower("I WAS BIG BUT NOW I'M SMALL") << std::endl;
 
-	std::cout << "IsEqualIgnoreCase: " << (nc::StringUtils::IsEqualIgnoreCase("maple", "MAPLE") ? "Equal" : "Not Equal") << std::endl;
-	std::cout << "IsEqualIgnoreCase: " << (nc::StringUtils::IsEqualIgnoreCase("Neumont", "UofU") ? "Equal" : "Not Equal") << std::endl;
+	//std::cout << "IsEqualIgnoreCase: " << (nc::StringUtils::IsEqualIgnoreCase("maple", "MAPLE") ? "Equal" : "Not Equal") << std::endl;
+	//std::cout << "IsEqualIgnoreCase: " << (nc::StringUtils::IsEqualIgnoreCase("Neumont", "UofU") ? "Equal" : "Not Equal") << std::endl;
 
-	std::cout << "CreateUnique: " << nc::StringUtils::CreateUnique("id_") << std::endl;
-	std::cout << "CreateUnique: " << nc::StringUtils::CreateUnique("id_") << std::endl;
-	std::cout << "CreateUnique: " << nc::StringUtils::CreateUnique("id_") << std::endl;
+	//std::cout << "CreateUnique: " << nc::StringUtils::CreateUnique("id_") << std::endl;
+	//std::cout << "CreateUnique: " << nc::StringUtils::CreateUnique("id_") << std::endl;
+	//std::cout << "CreateUnique: " << nc::StringUtils::CreateUnique("id_") << std::endl;
 
 	//nc::MemoryTracker::Initialize();
 	nc::seedRandom((unsigned int)time(nullptr));
@@ -34,7 +35,7 @@ int main(int argc, char* argv[])
 
 	ENGINE.Initialize();
 
-	auto world = make_unique<nc::World05>();
+	auto world = make_unique<nc::World06>();
 	world->Initialize();
 
 	// main loop

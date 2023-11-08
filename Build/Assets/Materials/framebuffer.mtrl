@@ -1,0 +1,16 @@
+{
+  "program": "shaders/lit_phong.prog",
+  "albedoTexture": "Textures/Gear_1_Textures/Gear_1_BaseColor.png",
+  "albedo": [
+    1,
+    1,
+    1
+  ],
+  "specular": [
+    0,
+    0,
+    0
+  ],
+  "tiling": [ 1, 1 ],
+  "offset": [ 0, 0 ]
+}

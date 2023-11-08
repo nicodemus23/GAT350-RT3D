@@ -10,7 +10,6 @@
 #define SPECULAR_TEXTURE_MASK	(1 << 1)
 #define NORMAL_TEXTURE_MASK		(1 << 2)
 #define EMISSIVE_TEXTURE_MASK	(1 << 3)
-#define CUBEMAP_TEXTURE_MASK	(1 << 4)
 
 in layout(location = 0) vec3 fposition; // will receive interpolated vertex positions for each fragment 
 in layout(location = 1) vec2 ftexcoord;
@@ -56,8 +55,6 @@ layout(binding = 0) uniform sampler2D albedoTexture;
 layout(binding = 1) uniform sampler2D specularTexture;
 layout(binding = 2) uniform sampler2D normalTexture;
 layout(binding = 3) uniform sampler2D emissiveTexture;
-
-// cubemap sampler for the Ryfjallet environment map
 layout(binding = 4) uniform samplerCube Ryfjallet;
 
 float attenuation(in vec3 position1, in vec3 position2, in float range)
@@ -83,19 +80,24 @@ void phong(in Light light, in vec3 position, in vec3 normal, out vec3 diffuse, o
 	}
 
 	float intensity = max(dot(lightDir, normal), 0) * spotIntensity;
-	diffuse = (light.color * intensity); //// still diffuse lighting but albedo texture
+	diffuse = (light.color * intensity); // still diffuse lighting but albedo texture
 	
 
 
 	// SPECULAR lighting component, contributing only if the surface is facing the light 
-	specular = vec3(0);////
+	specular = vec3(0);
 	if (intensity > 0) // checks whether the surface is facing the light source 
 	{
-		vec3 reflection = reflect(-lightDir, normal); // calculate reflection vector (which direction light bounces off surface)
-		vec3 viewDir = normalize(-position);//// // calc view dir vector (normalized vector pointing from frag position to camera)
-		float intensity = max(dot(reflection, viewDir), 0); // dot product of reflection vector and view direction (angle between ref vector and view vector)
-		intensity = pow(intensity, material.shininess);//// // raise intensity to power of shininess setting in material 
-		specular = vec3(intensity * spotIntensity);//// // final specular color 
+		vec3 viewDir = normalize(-position); // calc view dir vector (normalized vector pointing from frag position to camera)
+		//vec3 reflection = reflect(-lightDir, normal); // calculate reflection vector (which direction light bounces off surface)
+		//float intensity = max(dot(reflection, viewDir), 0); // dot product of reflection vector and view direction (angle between ref vector and view vector)
+
+		// blinn-phong (spec change mainly)
+		vec3 h = normalize(viewDir + lightDir); // normalize makes it a unit vector 
+		intensity = max(dot(h, normal), 0);
+
+		intensity = pow(intensity, material.shininess); // raise intensity to power of shininess setting in material 
+		specular = vec3(intensity * spotIntensity); // final specular color 
 	}
 
 }
@@ -108,45 +110,34 @@ void main()
 	vec4 specularColor = bool(material.params & SPECULAR_TEXTURE_MASK) ? texture(specularTexture, ftexcoord) : vec4(material.specular, 1);
 	vec4 emissiveColor = bool(material.params & EMISSIVE_TEXTURE_MASK) ? texture(emissiveTexture, ftexcoord) : vec4(material.emissive, 1);
 
-	// Calculate the normal from the normal map and TBN matrix (my addition for reflection)
-	// normal vector is sampled form the normalTexture then scaled from [0,1] to [-1,1] to convert it from texture color space to the tantent space and multiplied by TBN matrix to transform it to appropriate space
 	vec3 normal = normalize(ftbn * ((texture(normalTexture, ftexcoord).rgb * 2.0) - 1.0));
-	// calculate reflection vector using the view direction and normal
 	vec3 viewDir = normalize(-fposition);
 	vec3 reflectionVector = reflect(viewDir, normal);
+	vec4 reflectedColor = texture(Ryfjallet, reflectionVector);
 
-	// Initialize reflected color (my addition) 	// sample cubemap with reflection vector
-	//vec4 reflectedColor = vec4(1); //texture(Ryfjallet, reflectionVector);
-	vec4 reflectedColor = bool(material.params & CUBEMAP_TEXTURE_MASK) ? texture(Ryfjallet, reflectionVector) : vec4(vec3(material.reflectionIntensity), 1); // need to use ternary operation since using cubemap?
-
-	// (set base color) set ambient light + emissive color // modulated by albedoColor and ambientIntensity (ambientIntensity is my addition)
-	ocolor = vec4(ambientLight * ambientIntensity, 1) * albedoColor + emissiveColor;////
+	// set ambient light + emissive color // modulated by albedoColor and ambientIntensity (ambientIntensity is my addition)
+	ocolor = vec4(ambientLight * ambientIntensity, 1) * albedoColor + emissiveColor;
  
-	// iterate over lights and calculate phong shading
+	// set lights
 	for (int i = 0; i < numLights; i++)
 	{
-		vec3 diffuse;////
-		vec3 specular;////
+		vec3 diffuse;
+		vec3 specular;
  
 		float attenuation = (lights[i].type == DIRECTIONAL) ? 1 : attenuation(lights[i].position, fposition, lights[i].range);
 
-		vec3 normal = texture(normalTexture, ftexcoord).rgb;////
-		normal = (normal * 2); // (0 - 1) -> (-1 - 1)////
-		normal = normalize(ftbn * normal);////
+		vec3 normal = texture(normalTexture, ftexcoord).rgb;
+		normal = (normal * 2); // (0 - 1) -> (-1 - 1)
+		normal = normalize(ftbn * normal);
  
 		phong(lights[i], fposition, normal, diffuse, specular);
-		// accumulate lighting contribution to ocolor
-		ocolor += (((vec4(diffuse, 1) * albedoColor) + (vec4(specular, 1)) * specularColor) * lights[i].intensity * attenuation);////
+		ocolor += ((vec4(diffuse, 1) * albedoColor) + (vec4(specular, 1)) * specularColor) * lights[i].intensity * attenuation;
+		
 	}
-
-	// FINAL: combine phong shading result with the environment reflection:
-	ocolor = mix(ocolor, reflectedColor, material.reflectionIntensity);
-	// output only reflectedColor
-	//ocolor = reflectedColor;
-
-
-	// utility:
 	// outputs just the normal map for viewing 
 	//ocolor = vec4(texture(normalTexture, ftexcoord).rgb, 1);
+	//ocolor = vec4(reflection);
+	//ocolor = mix(ocolor, reflectedColor, material.reflectionIntensity);
+	ocolor = reflectedColor;
 }
 	

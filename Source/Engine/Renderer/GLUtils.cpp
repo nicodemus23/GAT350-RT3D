@@ -32,6 +32,6 @@ void nc::CheckGLError()
 	GLenum err;
 	while ((err = glGetError()) != GL_NO_ERROR) {
 	const char* errorString = GetGLErrorString(err);
-	std::cerr << "OpenGL Error: " << err << std::endl;
+	std::cerr << "OpenGL Error: " << errorString << "(" << err << ")" << std::endl;
 	}
 }

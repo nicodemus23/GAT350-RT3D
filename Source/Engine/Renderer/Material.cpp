@@ -66,7 +66,7 @@ namespace nc
 		READ_DATA(document, albedo);
 		READ_DATA(document, specular);
 		READ_DATA(document, shininess);
-		READ_DATA(document, reflectionIntensity);
+	//	READ_DATA(document, reflectionIntensity);
 		READ_DATA(document, emissive);
 		READ_DATA(document, tiling);
 		READ_DATA(document, offset);

@@ -59,7 +59,8 @@ namespace nc
 			GLenum internalFormat = (channels == 4) ? GL_RGBA8 : GL_RGB8;
 			GLenum format = (channels == 4) ? GL_RGBA : GL_RGB;
 
-			glTexImage2D(targets[i], 0, GL_RGB, m_size.x, m_size.y, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+			glTexImage2D(targets[i], 0, internalFormat, m_size.x, m_size.y, 0, format, GL_UNSIGNED_BYTE, data);
+			//glTexImage2D(targets[i], 0, GL_RGB, m_size.x, m_size.y, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
 			stbi_image_free(data);
 		}
 

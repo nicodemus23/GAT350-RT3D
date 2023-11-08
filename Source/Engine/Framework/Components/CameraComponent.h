@@ -21,6 +21,7 @@ namespace nc
 	public:
 		glm::mat4 projection{ 1 };
 		glm::mat4 view{ 1 };
+		glm::vec3 rotation{ 1 };
 
 		float fov = 70.0f;
 		float aspect = 0.0f;

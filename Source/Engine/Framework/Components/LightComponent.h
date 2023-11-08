@@ -25,6 +25,7 @@ namespace nc
 
 		eType type = eType::Point;
 		glm::vec3 color{ 1 };
+		glm::vec3 rotation{ 1 };
 		float intensity = 1;
 		float range = 20;
 		float innerAngle = 20;

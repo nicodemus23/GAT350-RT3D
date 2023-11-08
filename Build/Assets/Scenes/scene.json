@@ -6,8 +6,8 @@
       "persistent": true,
       "transform": {
         "position": [ 0, 0, 1 ],
-        "scale": [ 1, 1, 1 ],
-        "rotation": [ 0, 0, 0 ]
+        "rotation": [ 0, 0, 0 ],
+        "scale": [ 1, 1, 1 ]
       },
       "components": [
         {
@@ -21,60 +21,132 @@
     },
     {
       "type": "Actor",
-      "name": "actor1",
+      "name": "camera",
       "persistent": true,
       "active": true,
-      "enableDepth": false,
+      "prototype": false,
       "transform": {
-        "position": [ -0.9, -0.6, 16.2 ],
-        "scale": [ 0.1, 0.1, 0.1 ],
-        "rotation": [ 0, 78, 0 ]
+        "position": [ 1, 0, 1 ],
+        "rotation": [ 0, 0, 0 ],
+        "scale": [ 1, 1, 1 ]
       },
       "components": [
         {
-          "type": "ModelComponent",
-          "modelName": "models/Gear1.obj",
-          "materialName": "materials/gear1.mtrl"
+          "type": "RotateComponent",
+          "euler": [ 0.0, 10.0, 0.0 ]
         }
       ]
     },
     {
       "type": "Actor",
-      "name": "actor2",
+      "name": "light1",
+      "persistent": true,
+      "active": true,
+      "prototype": false,
+      "transform": {
+        "position": [ 1, 0, 1 ],
+        "rotation": [ 0, 0, 0 ],
+        "scale": [ 1, 1, 1 ]
+      },
+      "components": [
+        {
+          "type": "RotateComponent",
+          "euler": [ 0.0, 10.0, 0.0 ]
+        }
+      ]
+    },
+    {
+      "type": "Actor",
+      "name": "actor1",
       "persistent": true,
       "active": true,
       "enableDepth": false,
       "transform": {
+        "position": [ 1.2, -0.6, 3 ],
+        "scale": [ 0.1, 0.1, 0.1 ]
+      },
+      "components": 
+        {
+          "type": "ModelComponent",
+          "modelName": "models/Gear1.obj",
+          "materialName": "materials/gear1.mtrl"
+        }
+    },
+    {
+      "type": "Actor",
+      "name": "actor2",
+      "persistent": false,
+      "active": false,
+      "transform": {
         "position": [ -1.5, -0.7, 17.8 ],
-        "scale": [ 1, 1, 1 ],
-        "rotation": [ 0, 90, -2 ]
+        "rotation": [ 0, 90, -2 ],
+        "scale": [ 1, 1, 1 ]
       },
       "components": [
         {
           "type": "ModelComponent",
           "modelName": "models/bottles/glass_bottle.obj",
-          "materialName": "materials/refraction.mtrl"
+          "materialName": "materials/refraction.mtrl",
+          "enableDepth": true
+
         }
       ]
     },
     {
       "type": "Actor",
       "name": "actor3",
-      "persistent": true,
+      "persistent": false,
       "active": false,
-      "enableDepth": false,
       "transform": {
         "position": [ 0.4, -0.3, 17.2 ],
-        "scale": [ 0.002, 0.002, 0.002 ],
-        "rotation": [ -3, 322, 0 ]
+        "rotation": [ -3, 322, 0 ],
+        "scale": [ 0.002, 0.002, 0.002 ]
       },
       "components": [
         {
           "type": "ModelComponent",
-          "modelName": "models/LionKeystone.obj",
-          "materialName": "materials/lion.mtrl"
+          "modelName": "models/Gear2.obj",
+          "materialName": "materials/reflection.mtrl",
+          "enableDepth": false
         }
       ]
-    } 
+    },
+    {
+      "type": "Actor",
+      "name": "sprite",
+      "persistent": false,
+      "active": false,
+      "transform": {
+        "position": [ 0, 0, 0 ],
+        "rotation": [ 0, 0, 0 ],
+        "scale": [ 1, 1, 1 ]
+      },
+      "components": [
+        {
+          "type": "ModelComponent",
+          "modelName": "models/quad.obj",
+          "materialName": "Materials/sprite.mtrl"
+        }
+      ]
+    },
+    {
+      "type": "Actor",
+      "name": "tree",
+      "persistent": false,
+      "active": false,
+      "prototype": true,
+      "transform": {
+        "position": [ 1, 0, 1 ],
+        "rotation": [ 0, 0, 0 ],
+        "scale": [ 1, 1, 1 ]
+      },
+      "components": [
+        {
+          "type": "ModelComponent",
+          "modelName": "models/quad.obj",
+          "materialName": "Materials/tree.mtrl"
+        }
+      ]
+    }
   ]
 }

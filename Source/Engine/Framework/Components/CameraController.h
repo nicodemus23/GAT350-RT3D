@@ -10,8 +10,11 @@ namespace nc
 
 		bool Initialize() override;
 		void Update(float dt) override;
+		void ProcessGui();
 
 	public:
+		glm::vec3 rotation{ 1 };
+
 		float sensitivity = 0.1f;
 		float speed = 0;
 		float yaw = 0;

@@ -13,6 +13,8 @@
 #include "Components/CameraComponent.h"
 #include "Components/CameraController.h"
 
+#include "Components/RotateComponent.h"
+
 #include "Components/PhysicsComponent.h"
 #include "Components/EnginePhysicsComponent.h"
 
