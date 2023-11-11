@@ -16,35 +16,35 @@ namespace nc
 		m_scene->Initialize();
 
 		auto texture = std::make_shared<Texture>();
-		texture->CreateTexture(512, 512);
+		texture->CreateTexture(1024, 1024);
 		ADD_RESOURCE("fb_texture", texture);
 
 		auto framebuffer = std::make_shared<Framebuffer>();
 		framebuffer->CreateFramebuffer(texture);
 		ADD_RESOURCE("fb", framebuffer);
 
-		auto material = GET_RESOURCE(Material, "materials/framebuffer.mtrl");
+		auto material = GET_RESOURCE(Material, "Materials/postprocess.mtrl"); // use postprocess material to hold ...
 		if (material)
 		{
 			material->albedoTexture = texture;
 		}
 
 
-		{
-			auto actor = CREATE_CLASS(Actor);
-			actor->name = "light1";
-			actor->transform.position = glm::vec3{ 3, 3, 3 };
-			auto lightComponent = CREATE_CLASS(LightComponent);
-			lightComponent->type = LightComponent::eType::Point;
-			//lightComponent->color = glm::rgbColor(glm::vec3{ randomf() * 360, 1, 1 });
-			lightComponent->color = (glm::vec3 { 1, 1, 1 });
-			lightComponent->intensity = 1;
-			lightComponent->range = 20;
-			lightComponent->innerAngle = 10.0f;
-			lightComponent->outerAngle = 30.0f;
-			actor->AddComponent(std::move(lightComponent));
-			m_scene->Add(std::move(actor));
-		}
+		//{
+		//	auto actor = CREATE_CLASS(Actor);
+		//	actor->name = "light1";
+		//	actor->transform.position = glm::vec3{ 3, 3, 3 };
+		//	auto lightComponent = CREATE_CLASS(LightComponent);
+		//	lightComponent->type = LightComponent::eType::Point;
+		//	//lightComponent->color = glm::rgbColor(glm::vec3{ randomf() * 360, 1, 1 });
+		//	lightComponent->color = (glm::vec3 { 1, 1, 1 });
+		//	lightComponent->intensity = 1;
+		//	lightComponent->range = 20;
+		//	lightComponent->innerAngle = 10.0f;
+		//	lightComponent->outerAngle = 30.0f;
+		//	actor->AddComponent(std::move(lightComponent));
+		//	m_scene->Add(std::move(actor));
+		//}
 
 		
 		{
@@ -77,42 +77,79 @@ namespace nc
 
 	void World06::Update(float dt)
 	{
+		m_time += dt;
+
 		ENGINE.GetSystem<Gui>()->BeginFrame();
 
 		m_scene->Update(dt);
 		m_scene->ProcessGui();
 
-		auto actor = m_scene->GetActorByName<Actor>("actor1");
-		
-		// Get material for Actor1
-		auto material = actor->GetComponent<ModelComponent>()->material;
-		material->ProcessGui();
-		material->Bind();
-
-		auto program = material->GetProgram();
-		if (!material) {
-			std::cerr << "Error: Material is null." << std::endl;
-			return;
+		// set postprocess gui
+		ImGui::Begin("Post-Process");
+		ImGui::SliderFloat("Blend", &m_blend, 0, 1);
+		bool effect = m_params & INVERT_MASK;
+		if (ImGui::Checkbox("Invert", &effect))
+		{	// bit operations:
+			// 0001 - mask
+			// 0000 - params
+			// -------------
+			// 0001
+			// |= is "OR ="
+			if (effect) m_params |= INVERT_MASK;
+			else m_params ^= INVERT_MASK; // ^= (exclusive or) since there is no 
+		}
+		effect = m_params & GRAYSCALE_MASK;
+		if (ImGui::Checkbox("Grayscale", &effect))
+		{	// bit operations:
+			// 0001 - mask
+			// 0000 - params
+			// 0001
+			// |= is "OR ="
+			if (effect) m_params |= GRAYSCALE_MASK;
+			else m_params ^= GRAYSCALE_MASK; // ^= (exclusive or) since there is no 
 		}
 
+		ImGui::End();
 
-		material = GET_RESOURCE(Material, "materials/refraction.mtrl");
-		if (material)
+		// set post process shader
+		auto program = GET_RESOURCE(Program, "shaders/postprocess.prog");
+		if (program)
 		{
-			ImGui::Begin("Refraction");
-
-			//m_refraction = 1.0 + std::fabs(std::sin(m_time));
-			m_refraction = 1.9;
-			ImGui::DragFloat("IOR", &m_refraction, 0.01f, 1, 3); 
-			auto program = material->GetProgram();
-			program->SetUniform("ior", m_refraction);
-			ImGui::End();
+			program->Use(); // this is the shader we're gonna use...
+			program->SetUniform("blend", m_blend);
+			program->SetUniform("params", m_params);
 		}
+
+		//auto actor = m_scene->GetActorByName<Actor>("actor1");
+		//
+		//// Get material for Actor1
+		//auto material = actor->GetComponent<ModelComponent>()->material;
+		//material->ProcessGui();
+		//material->Bind();
+
+		//auto program = material->GetProgram();
+		//if (!material) {
+		//	std::cerr << "Error: Material is null." << std::endl;
+		//	return;
+		//}
+
+
+		//material = GET_RESOURCE(Material, "materials/refraction.mtrl");
+		//if (material)
+		//{
+		//	ImGui::Begin("Refraction");
+
+		//	//m_refraction = 1.0 + std::fabs(std::sin(m_time));
+		//	m_refraction = 1.9;
+		//	ImGui::DragFloat("IOR", &m_refraction, 0.01f, 1, 3); 
+		//	auto program = material->GetProgram();
+		//	program->SetUniform("ior", m_refraction);
+		//	ImGui::End();
+		//}
 
 		//material->GetProgram()->SetUniform("ambientLight", m_ambientColor);
-		//material->GetProgram()->SetUniform("ambientIntensity", m_ambientIntensity);
 
-		m_time += dt;
+		//material->GetProgram()->SetUniform("ambientIntensity", m_ambientIntensity);
 
 		ENGINE.GetSystem<Gui>()->EndFrame();
 
@@ -121,25 +158,25 @@ namespace nc
 	void World06::Draw(Renderer& renderer)
 	{
 		// *** PASS 1 *** 
-		m_scene->GetActorByName("cube")->active = false;
+		m_scene->GetActorByName("postprocess")->active = false;
 
 		auto framebuffer = GET_RESOURCE(Framebuffer, "fb");
 		renderer.SetViewport(framebuffer->GetSize().x, framebuffer->GetSize().y); 
 		framebuffer->Bind();
 
-		renderer.BeginFrame();
+		renderer.BeginFrame(glm::vec3{ 0.0f, 0, 0.0f });
 		m_scene->Draw(renderer); 
 
 		framebuffer->Unbind();
 
-		m_scene->GetActorByName("cube")->active = true;
+		m_scene->GetActorByName("postprocess")->active = true;
 		//auto actor = m_scene->GetActorByName("cube");
 		//actor->active = true;
 
 		// *** PASS 2 ***
 		renderer.ResetViewport();
 		renderer.BeginFrame();
-		m_scene->Draw(renderer);
+		m_scene->GetActorByName("postprocess")->Draw(renderer);
 
 
 		// post-render

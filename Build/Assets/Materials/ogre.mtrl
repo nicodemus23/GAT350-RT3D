@@ -1,17 +1,17 @@
 {
   "program": "shaders/lit_phong_normal.prog",
-  "albedoTexture": "Textures/ogre_diffuse.bmp",
-  "emissiveTexture": "Textures/ogre_emissive.bmp",
-  "normalTexture": "Textures/ogre_normal.bmp",
+  "albedoTexture": "Textures/OgreTextures/ogre_diffuse.bmp",
+  "emissiveTexture": "Textures/OgreTextures/ogre_emissive.bmp",
+  "normalTexture": "Textures/OgreTextures/ogre_normal.bmp",
   "albedo": [
     1,
     1,
     1
   ],
   "specular": [
-    0.4,
-    0.4,
-    0.4
+    0.0,
+    0.0,
+    0.0
   ],
   "shininess": 2,
   "emissive": [

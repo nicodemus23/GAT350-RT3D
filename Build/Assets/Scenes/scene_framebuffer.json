@@ -2,14 +2,61 @@
   "actors": [
     {
       "type": "Actor",
-      "name": "actor1",
+      "name": "camera1",
       "persistent": true,
       "active": true,
+      "prototype": false,
+      "transform": {
+        "position": [ 1, 0, 1 ],
+        "scale": [ 1, 1, 1 ],
+        "rotation": [ 0, 90, 0 ]
+      },
+      "components": [
+        {
+          "type": "CameraComponent",
+          "fov": 70.0,
+          "aspect": 1.78,
+          "near": 0.1,
+          "far": 100.0
+        },
+        {
+          "type": "CameraController",
+          "speed": 0.1,
+          "sensitivity": 3.0
+        }
+      ]
+    },
+    {
+      "type": "Actor",
+      "name": "light1",
+      "persistent": true,
+      "active": true,
+      "prototype": false,
+      "transform": {
+        "position": [ 3, 0, 0 ],
+        "rotation": [ 0, 0, 0 ]
+      },
+      "components": [
+        {
+          "type": "LightComponent",
+          "color": [ 1, 1, 1 ],
+          "intensity": 1.0,
+          "range": 35.0,
+          "innerAngle": 10.0,
+          "outerAngle": 30.0
+        }
+      ]
+    },
+    {
+      "type": "Actor",
+      "name": "actor1",
+      "persistent": true,
+      "active": false,
       "enableDepth": false,
       "transform": {
         "position": [ -0.9, -0.6, 16.2 ],
-        "scale": [ 0.1, 0.1, 0.1 ],
-        "rotation": [ 0, 78, 0 ]
+        "rotation": [ 0, 0, 0 ],
+        "scale": [ 0.1, 0.1, 0.1 ]
       },
       "components": [
         {
@@ -30,8 +77,8 @@
       "active": false,
       "transform": {
         "position": [ -1.5, -0.7, 17.8 ],
-        "scale": [ 1, 1, 1 ],
-        "rotation": [ 0, 90, -2 ]
+        "rotation": [ 0, 0, 0 ],
+        "scale": [ 1, 1, 1 ]
       },
       "components": [
         {
@@ -39,7 +86,10 @@
           "modelName": "models/bottles/glass_bottle.obj",
           "materialName": "materials/refraction.mtrl",
           "enableDepth": true
-
+        },
+        {
+          "type": "RotateComponent",
+          "euler": [ 0.0, 45.0, 0.0 ]
         }
       ]
     },
@@ -50,8 +100,8 @@
       "active": false,
       "transform": {
         "position": [ 0.4, -0.3, 17.2 ],
-        "scale": [ 0.002, 0.002, 0.002 ],
-        "rotation": [ -3, 322, 0 ]
+        "rotation": [ 0, 0, 0 ],
+        "scale": [ 0.002, 0.002, 0.002 ]
       },
       "components": [
         {
@@ -59,30 +109,47 @@
           "modelName": "models/Gear2.obj",
           "materialName": "materials/reflection.mtrl",
           "enableDepth": false
+        },
+        {
+          "type": "RotateComponent",
+          "euler": [ 0.0, 45.0, 0.0 ]
         }
       ]
     },
-   
     {
       "type": "Actor",
-      "name": "cube",
+      "name": "actor4",
       "persistent": true,
       "active": true,
-      "prototype": false,
+      "enableDepth": false,
       "transform": {
-        "position": [ 1, 0, 10 ],
-        "scale": [ 1, 1, 1 ],
-        "rotation": [ 0, 0, 0 ]
+        "position": [ 0, 0, 0 ],
+        "rotation": [ 0, 0, 0 ],
+        "scale": [ 1, 1, 1 ]
       },
       "components": [
         {
           "type": "ModelComponent",
-          "modelName": "models/cube.obj",
-          "materialName": "Materials/framebuffer.mtrl"
+          "modelName": "models/ogre.obj",
+          "materialName": "materials/ogre.mtrl"
         },
         {
           "type": "RotateComponent",
-          "euler": [15, 45, 5]
+          "euler": [ 0, 180, 0 ]
+        }
+      ]
+    },
+    {
+      "type": "Actor",
+      "name": "postprocess",
+      "persistent": true,
+      "active": true,
+      "prototype": false,
+      "components": [
+        {
+          "type": "ModelComponent",
+          "modelName": "models/quad.obj",
+          "materialName": "Materials/postprocess.mtrl"
         }
       ]
     }

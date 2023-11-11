@@ -37,7 +37,7 @@ namespace nc
 		this->far = far;
 
 		// set projection matrix with glm::perspective function (fov is in degrees, convert to radians)
-		projection = glm::perspective(glm::radians(fov), aspect, near, far);
+		projection = glm::perspective(glm::radians(fov), this->aspect, this->near, this->far);
 	}
 
 	void CameraComponent::SetLookAt(const glm::vec3& eye, const glm::vec3& center, const glm::vec3& up)

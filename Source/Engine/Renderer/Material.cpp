@@ -81,7 +81,7 @@ namespace nc
 		m_program->SetUniform("material.albedo", albedo);
 		m_program->SetUniform("material.specular", specular);
 		m_program->SetUniform("material.shininess", shininess);
-		m_program->SetUniform("material.reflectionIntensity", reflectionIntensity);
+	//	m_program->SetUniform("material.reflectionIntensity", reflectionIntensity);
 		m_program->SetUniform("material.emissive", emissive);
 		m_program->SetUniform("material.tiling", tiling);
 		m_program->SetUniform("material.offset", offset);
@@ -122,7 +122,7 @@ namespace nc
 		ImGui::ColorEdit4("Albedo", glm::value_ptr(albedo));
 		ImGui::ColorEdit4("Specular", glm::value_ptr(specular));
 		ImGui::DragFloat("Shininess", &shininess, 0.1f, 2.0f, 200.0f);
-		ImGui::DragFloat("Reflection Intensity", &reflectionIntensity, 0.1f, 0.0f, 1.0f);
+		//ImGui::DragFloat("Reflection Intensity", &reflectionIntensity, 0.1f, 0.0f, 1.0f);
 		ImGui::ColorEdit4("Emissive", glm::value_ptr(emissive));
 		ImGui::DragFloat2("Tiling", glm::value_ptr(tiling), 0.1f);
 		ImGui::DragFloat2("Offset", glm::value_ptr(offset), 0.1f);

@@ -26,7 +26,7 @@ namespace nc
 			ERROR_LOG("Failed to read euler angles for RotateComponent");
 		}
 		else {
-			ERROR_LOG("euler angles parsed from json successfully");
+			INFO_LOG("euler angles parsed from json successfully");
 		}
 
 		READ_DATA(value, euler);

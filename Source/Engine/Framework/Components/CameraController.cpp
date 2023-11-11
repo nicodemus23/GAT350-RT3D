@@ -54,7 +54,7 @@ namespace nc
 	void CameraController::ProcessGui()
 	{
 		ImGui::DragFloat("Speed", &speed, 0.1f);
-		ImGui::DragFloat("Sensitivity", &sensitivity, 0.1f);
+		ImGui::DragFloat("Sensitivity", &sensitivity, 3.0f);
 	}
 
 	void CameraController::Read(const json_t& value)

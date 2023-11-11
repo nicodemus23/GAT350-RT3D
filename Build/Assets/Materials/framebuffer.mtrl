@@ -1,6 +1,6 @@
 {
   "program": "shaders/lit_phong.prog",
-  "albedoTexture": "Textures/Gear_1_Textures/Gear_1_BaseColor.png",
+  "albedoTexture": "Textures/MiscTextures/rubix_cube.jpg",
   "albedo": [
     1,
     1,
