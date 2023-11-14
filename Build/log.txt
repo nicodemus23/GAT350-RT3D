@@ -5,7 +5,7 @@ INFO: Factory.h(74) Class registered: EnginePhysicsComponent
 INFO: Factory.h(74) Class registered: CameraController
 INFO: Factory.h(74) Class registered: CameraComponent
 INFO: Factory.h(74) Class registered: Actor
-INFO: Main.cpp(17) Motor Initialisieren, bruh...
+INFO: Main.cpp(18) Motor Initialisieren, bruh...
 INFO: RotateComponent.cpp(29) euler angles parsed from json successfully
 INFO: RotateComponent.cpp(29) euler angles parsed from json successfully
 INFO: RotateComponent.cpp(29) euler angles parsed from json successfully

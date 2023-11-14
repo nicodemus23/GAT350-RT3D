@@ -12,10 +12,16 @@ namespace nc
 	class World06 : public World
 	{
 
-	public:
-	const uint32_t INVERT_MASK		= (1 << 0);
-	const uint32_t GRAYSCALE_MASK	= (1 << 1);
-	const uint32_t COLORTINT_MASK	= (1 << 2);
+	public:	
+	const uint32_t INVERT_MASK			= (1 << 0);
+	const uint32_t GRAYSCALE_MASK		= (1 << 1);
+	const uint32_t COLORTINT_MASK		= (1 << 2);
+	const uint32_t SCANLINE_MASK		= (1 << 3);
+	const uint32_t GRAIN_MASK			= (1 << 4);
+	const uint32_t BLUR_MASK			= (1 << 5);
+	const uint32_t BLUR5x5_MASK			= (1 << 6);
+	const uint32_t RADIAL_BLUR_MASK		= (1 << 7);
+	const uint32_t EDGE_DETECTION_MASK	= (1 << 8);
 
 		
 
@@ -31,6 +37,23 @@ namespace nc
 		float m_time = 0;
 		float m_speed = 5;
 		float m_blend{ 1 };
+		glm::vec3 m_colorTint{ 1 }; // instance of glm::vec3
+		float m_scanlineFrequency = 100.0f;
+		float m_scanlineIntensity = 0.5f;
+		float m_blurIntensity = 0.5f;
+		float m_blur5x5Intensity = 0.5f;
+		GLfloat m_edgeIntensity = 0.5f;
+
+		GLfloat m_radialBlurIntensity = 0.5f;
+		GLfloat m_blurQuality = 8.0f;
+		GLfloat m_blurSize = 16.0f;
+		GLfloat m_blurDirections = 16.0f;
+
+
+		GLint m_textureWidth = 1024;
+		GLint m_textureHeight = 1024;
+
+		float m_grainIntensity = 0.5f;
 
 		float m_refraction{ 1 };
 		glm::vec3 m_ambientColor{ 0.2f };

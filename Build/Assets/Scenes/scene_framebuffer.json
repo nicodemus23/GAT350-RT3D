@@ -135,7 +135,7 @@
         },
         {
           "type": "RotateComponent",
-          "euler": [ 0, 180, 0 ]
+          "euler": [ 0, 0, 0 ]
         }
       ]
     },

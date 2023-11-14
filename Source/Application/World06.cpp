@@ -46,7 +46,7 @@ namespace nc
 		//	m_scene->Add(std::move(actor));
 		//}
 
-		
+
 		{
 			auto actor = CREATE_CLASS(Actor);
 			actor->name = "camera1";
@@ -70,7 +70,7 @@ namespace nc
 		return true;
 	};
 
-		
+
 	void World06::Shutdown()
 	{
 	}
@@ -95,8 +95,7 @@ namespace nc
 			// -------------
 			// 0001
 			// |= is "OR ="
-			if (effect) m_params |= INVERT_MASK;
-			else m_params ^= INVERT_MASK; // ^= (exclusive or) since there is no 
+			(effect) ? m_params |= INVERT_MASK : m_params &= ~INVERT_MASK; // ^= (exclusive or) since there is no 
 		}
 		effect = m_params & GRAYSCALE_MASK;
 		if (ImGui::Checkbox("Grayscale", &effect))
@@ -105,9 +104,91 @@ namespace nc
 			// 0000 - params
 			// 0001
 			// |= is "OR ="
-			if (effect) m_params |= GRAYSCALE_MASK;
-			else m_params ^= GRAYSCALE_MASK; // ^= (exclusive or) since there is no 
+			(effect) ? m_params |= GRAYSCALE_MASK :  m_params &= ~GRAYSCALE_MASK; // ^= (exclusive or) since there is no 
 		}
+
+		effect = m_params & COLORTINT_MASK;
+		if (ImGui::Checkbox("Tint Or Not to Tint", &effect))
+		{
+			// toggle bit mask checkbox
+			if (effect) m_params |= COLORTINT_MASK; // if effect is true set bit in m_params to on: turn on color tint (mask for tint set to 1 and other bits 0)
+			else m_params &= ~COLORTINT_MASK; // if effect is false set bit in m_params to off: turn off color tint (inverse mask color tint mask 0, other bits 1)
+
+
+		}
+		// always display color picker if enabled 
+		if (effect)
+		{
+			(ImGui::ColorEdit3("Tint", &m_colorTint[0]));
+		}
+
+		effect = m_params & SCANLINE_MASK;
+		if (ImGui::Checkbox("Scanline or ScanlineLESS", &effect))
+		{
+			(effect) ? m_params |= SCANLINE_MASK : m_params &= ~SCANLINE_MASK;
+		}
+
+		if (effect)
+		{
+			ImGui::SliderFloat("Scanline Frequency", &m_scanlineFrequency, 50.0f, 200.0f);
+			ImGui::SliderFloat("Scanline Intensity", &m_scanlineIntensity, 0.0f, 1.0f);
+		}
+
+		effect = m_params & GRAIN_MASK;
+		if (ImGui::Checkbox("Grain Effect", &effect))
+		{
+			(effect) ? m_params |= GRAIN_MASK : m_params &= ~GRAIN_MASK;
+		}
+		if (effect)
+		{
+			ImGui::SliderFloat("Grain Amount", &m_grainIntensity, 0.0f, 1.0f);
+		}
+
+		effect = m_params & BLUR_MASK;
+		if (ImGui::Checkbox("Blur 3x3 Effect", &effect))
+		{
+			(effect) ? m_params |= BLUR_MASK : m_params &= ~BLUR_MASK;
+		}
+
+		if (effect)
+		{
+			ImGui::SliderFloat("Blur Amount", &m_blurIntensity, 0.0f, 1.0f);
+		}
+
+		effect = m_params & BLUR5x5_MASK;
+		if (ImGui::Checkbox("Blur 5x5 Effect", &effect))
+		{
+			(effect) ? m_params |= BLUR5x5_MASK : m_params &= ~BLUR5x5_MASK;
+		}
+
+		if (effect)
+		{
+			ImGui::SliderFloat("Blur Amount", &m_blur5x5Intensity, 0.0f, 1.0f);
+		}
+
+		effect = m_params & RADIAL_BLUR_MASK;
+		if (ImGui::Checkbox("Radial Blur Effect", &effect))
+		{
+			(effect) ? m_params |= RADIAL_BLUR_MASK : m_params &= ~RADIAL_BLUR_MASK;
+		}
+		if (effect)
+		{
+			ImGui::SliderFloat("Radial Blur Multiplier", &m_radialBlurIntensity, 0.0f, 1.0f);
+		}
+
+		effect = m_params & EDGE_DETECTION_MASK;
+		if (ImGui::Checkbox("Edge Detection Effect", &effect))
+		{
+			(effect) ? m_params |= EDGE_DETECTION_MASK : m_params &= ~EDGE_DETECTION_MASK;
+		}
+		if (effect)
+		{
+			ImGui::SliderFloat("Edge Detection Multiplier", &m_edgeIntensity, 0.0f, 1.0f);
+		}
+
+		
+
+		
 
 		ImGui::End();
 
@@ -118,6 +199,61 @@ namespace nc
 			program->Use(); // this is the shader we're gonna use...
 			program->SetUniform("blend", m_blend);
 			program->SetUniform("params", m_params);
+
+			int textureWidth = ENGINE.GetSystem<Renderer>()->GetWidth();
+			int textureHeight = ENGINE.GetSystem<Renderer>()->GetHeight();
+			glm::vec2 texelSize = glm::vec2(1.0f / textureWidth, 1.0f / textureHeight);
+
+			// update tintRGB uniform only if the COLORTINT_MASK is set:
+			if (m_params & COLORTINT_MASK)
+			{
+				program->SetUniform("tintRGB", m_colorTint);
+			}
+
+			if (m_params & SCANLINE_MASK)
+			{
+				program->SetUniform("scanlineFrequency", m_scanlineFrequency);
+				program->SetUniform("scanlineIntensity", m_scanlineIntensity);
+			}
+
+			if (m_params & GRAIN_MASK)
+			{
+				program->SetUniform("grainIntensity", m_grainIntensity);
+				program->SetUniform("time", m_time);
+			}
+
+			if (m_params & BLUR_MASK)
+			{
+				program->SetUniform("texelSize", texelSize);
+				program->SetUniform("blurIntensity", m_blurIntensity);
+			}
+
+			if (m_params & BLUR5x5_MASK)
+			{
+				program->SetUniform("texelSize", texelSize);
+				program->SetUniform("blurIntensity", m_blur5x5Intensity);
+			}
+
+			if (m_params & RADIAL_BLUR_MASK)
+			{
+				program->SetUniform("texelSize", texelSize);
+				program->SetUniform("textureWidth", m_textureWidth);
+				program->SetUniform("textureHeight", m_textureHeight);
+				program->SetUniform("radialBlurIntensity", m_radialBlurIntensity);
+				program->SetUniform("uBlurQuality", m_blurQuality);
+				program->SetUniform("uBlurSize", m_blurSize);
+				program->SetUniform("uBlurDirections", m_blurDirections);
+			}
+
+			if (m_params & EDGE_DETECTION_MASK)
+			{
+				program->SetUniform("texelSize", texelSize);
+				program->SetUniform("textureWidth", m_textureWidth);
+				program->SetUniform("textureHeight", m_textureHeight);
+				program->SetUniform("edgeIntensity", m_edgeIntensity);
+			}
+			
+			
 		}
 
 		//auto actor = m_scene->GetActorByName<Actor>("actor1");
@@ -161,11 +297,11 @@ namespace nc
 		m_scene->GetActorByName("postprocess")->active = false;
 
 		auto framebuffer = GET_RESOURCE(Framebuffer, "fb");
-		renderer.SetViewport(framebuffer->GetSize().x, framebuffer->GetSize().y); 
+		renderer.SetViewport(framebuffer->GetSize().x, framebuffer->GetSize().y);
 		framebuffer->Bind();
 
 		renderer.BeginFrame(glm::vec3{ 0.0f, 0, 0.0f });
-		m_scene->Draw(renderer); 
+		m_scene->Draw(renderer);
 
 		framebuffer->Unbind();
 
