@@ -26,6 +26,8 @@ namespace nc
 		T* GetActor();
 		template<typename T = Actor>
 		T* GetActorByName(const std::string& name);
+		template<typename T>
+		std::vector<T*> GetComponents();
 
 		void SetGame(World* game) { m_game = game; }
 		void ProcessGui();
@@ -65,6 +67,27 @@ namespace nc
 		}
 
 		return nullptr;
+	}
+
+	template<typename T>
+	inline std::vector<T*> Scene::GetComponents()
+	{
+
+		std::vector<T*> components;
+		// go through actors in scene
+		for (auto& actor : m_actors)
+		{	// if actor isn't active, just continue to the next 
+			if (!actor->active) continue;
+
+			auto component = actor->GetComponent<T>();
+			// if there's a component, add to vector of components
+			if (component)
+			{
+				components.push_back(component);
+			}
+		}
+
+		return components;
 	}
 
 

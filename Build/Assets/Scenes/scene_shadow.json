@@ -34,17 +34,19 @@
       "active": true,
       "prototype": false,
       "transform": {
-        "position": [ 3, 0, 0 ],
-        "rotation": [ 0, 0, 0 ]
+        "position": [ 5.4, 2.9, 7.6 ],
+        "rotation": [ 175, 5, 0 ]
       },
       "components": [
         {
           "type": "LightComponent",
+          "lightType": "directional",
           "color": [ 1, 1, 1 ],
           "intensity": 1.0,
           "range": 35.0,
           "innerAngle": 10.0,
-          "outerAngle": 30.0
+          "outerAngle": 30.0,
+          "castShadow": true
         }
       ]
     },
@@ -62,12 +64,28 @@
         {
           "type": "ModelComponent",
           "modelName": "fantasy/obj/SF_Env_Tile_Dirt_01.obj",
-          "materialName": "fantasy/fantasy.mtrl",
-          "enableDepth": true
-        },
+          "materialName": "fantasy/fantasy.mtrl"        },
         {
           "type": "RotateComponent",
           "euler": [ 0.0, 0.0, 0.0 ]
+        }
+      ]
+    },
+    {
+      "type": "Actor",
+      "name": "depth DEBUG",
+      "persistent": true,
+      "active": true,
+      "transform": {
+        "position": [ 0.2, 3.0, 0 ],
+        "rotation": [ 0, 0, 0 ],
+        "scale": [ 2, 2, 2 ]
+      },
+      "components": [
+        {
+          "type": "ModelComponent",
+          "modelName": "models/quad.obj",
+          "materialName": "materials/sprite.mtrl"
         }
       ]
     },
@@ -85,8 +103,7 @@
         {
           "type": "ModelComponent",
           "modelName": "fantasy/obj/SF_Prop_Graveyard_Fence_01.obj",
-          "materialName": "fantasy/fantasy.mtrl",
-          "enableDepth": true
+          "materialName": "fantasy/fantasy.mtrl"        
         },
         {
           "type": "RotateComponent",
@@ -108,8 +125,7 @@
         {
           "type": "ModelComponent",
           "modelName": "fantasy/obj/SF_Prop_Graveyard_Fence_01.obj",
-          "materialName": "fantasy/fantasy.mtrl",
-          "enableDepth": true
+          "materialName": "fantasy/fantasy.mtrl"        
         },
         {
           "type": "RotateComponent",
@@ -131,8 +147,7 @@
         {
           "type": "ModelComponent",
           "modelName": "fantasy/obj/SF_Prop_Graveyard_Fence_02.obj",
-          "materialName": "fantasy/fantasy.mtrl",
-          "enableDepth": true
+          "materialName": "fantasy/fantasy.mtrl"        
         },
         {
           "type": "RotateComponent",
@@ -154,8 +169,7 @@
         {
           "type": "ModelComponent",
           "modelName": "fantasy/obj/SF_Prop_Graveyard_Fence_02.obj",
-          "materialName": "fantasy/fantasy.mtrl",
-          "enableDepth": true
+          "materialName": "fantasy/fantasy.mtrl"        
         },
         {
           "type": "RotateComponent",
@@ -177,8 +191,7 @@
         {
           "type": "ModelComponent",
           "modelName": "fantasy/obj/SF_Prop_Graveyard_Fence_03.obj",
-          "materialName": "fantasy/fantasy.mtrl",
-          "enableDepth": true
+          "materialName": "fantasy/fantasy.mtrl"        
         },
         {
           "type": "RotateComponent",
@@ -200,8 +213,7 @@
         {
           "type": "ModelComponent",
           "modelName": "fantasy/obj/SF_Prop_Graveyard_Fence_03.obj",
-          "materialName": "fantasy/fantasy.mtrl",
-          "enableDepth": true
+          "materialName": "fantasy/fantasy.mtrl"        
         },
         {
           "type": "RotateComponent",
@@ -223,8 +235,7 @@
         {
           "type": "ModelComponent",
           "modelName": "fantasy/obj/SF_Prop_Graveyard_Fence_03.obj",
-          "materialName": "fantasy/fantasy.mtrl",
-          "enableDepth": true
+          "materialName": "fantasy/fantasy.mtrl"        
         },
         {
           "type": "RotateComponent",
@@ -246,8 +257,7 @@
         {
           "type": "ModelComponent",
           "modelName": "fantasy/obj/SF_Prop_Graveyard_Fence_03.obj",
-          "materialName": "fantasy/fantasy.mtrl",
-          "enableDepth": true
+          "materialName": "fantasy/fantasy.mtrl"        
         },
         {
           "type": "RotateComponent",
@@ -269,8 +279,7 @@
         {
           "type": "ModelComponent",
           "modelName": "fantasy/obj/SF_Prop_Graveyard_Fence_03.obj",
-          "materialName": "fantasy/fantasy.mtrl",
-          "enableDepth": true
+          "materialName": "fantasy/fantasy.mtrl"        
         },
         {
           "type": "RotateComponent",
@@ -292,8 +301,7 @@
         {
           "type": "ModelComponent",
           "modelName": "fantasy/obj/SF_Prop_Graveyard_Fence_03.obj",
-          "materialName": "fantasy/fantasy.mtrl",
-          "enableDepth": true
+          "materialName": "fantasy/fantasy.mtrl"        
         },
         {
           "type": "RotateComponent",
@@ -315,8 +323,7 @@
         {
           "type": "ModelComponent",
           "modelName": "fantasy/obj/SF_Prop_Grave_02.obj",
-          "materialName": "fantasy/fantasy.mtrl",
-          "enableDepth": true
+          "materialName": "fantasy/fantasy.mtrl"
 
         },
         {
@@ -339,8 +346,7 @@
         {
           "type": "ModelComponent",
           "modelName": "fantasy/obj/SF_Env_GravelPile_01.obj",
-          "materialName": "fantasy/fantasy.mtrl",
-          "enableDepth": true
+          "materialName": "fantasy/fantasy.mtrl"        
         },
         {
           "type": "RotateComponent",
@@ -362,8 +368,7 @@
         {
           "type": "ModelComponent",
           "modelName": "fantasy/obj/SF_Bld_House_Church_01.obj",
-          "materialName": "fantasy/fantasy.mtrl",
-          "enableDepth": true
+          "materialName": "fantasy/fantasy.mtrl"
         },
         {
           "type": "RotateComponent",
@@ -385,8 +390,7 @@
         {
           "type": "ModelComponent",
           "modelName": "fantasy/obj/SF_Env_Stonepath_End_01.obj",
-          "materialName": "fantasy/fantasy.mtrl",
-          "enableDepth": true
+          "materialName": "fantasy/fantasy.mtrl"
         },
         {
           "type": "RotateComponent",
@@ -408,8 +412,7 @@
         {
           "type": "ModelComponent",
           "modelName": "fantasy/obj/SF_Env_Stonepath_01.obj",
-          "materialName": "fantasy/fantasy.mtrl",
-          "enableDepth": true
+          "materialName": "fantasy/fantasy.mtrl"
         },
         {
           "type": "RotateComponent",
@@ -431,8 +434,7 @@
         {
           "type": "ModelComponent",
           "modelName": "fantasy/obj/SF_Env_Stonepath_02.obj",
-          "materialName": "fantasy/fantasy.mtrl",
-          "enableDepth": true
+          "materialName": "fantasy/fantasy.mtrl"
         },
         {
           "type": "RotateComponent",
@@ -454,8 +456,7 @@
         {
           "type": "ModelComponent",
           "modelName": "fantasy/obj/SF_Env_Stonepath_03.obj",
-          "materialName": "fantasy/fantasy.mtrl",
-          "enableDepth": true
+          "materialName": "fantasy/fantasy.mtrl"
         },
         {
           "type": "RotateComponent",
@@ -477,8 +478,7 @@
         {
           "type": "ModelComponent",
           "modelName": "fantasy/obj/SF_Env_Stonepath_04.obj",
-          "materialName": "fantasy/fantasy.mtrl",
-          "enableDepth": true
+          "materialName": "fantasy/fantasy.mtrl"
         },
         {
           "type": "RotateComponent",
@@ -500,8 +500,7 @@
         {
           "type": "ModelComponent",
           "modelName": "fantasy/obj/SF_Env_StoneCircle_01.obj",
-          "materialName": "fantasy/fantasy.mtrl",
-          "enableDepth": true
+          "materialName": "fantasy/fantasy.mtrl"
         },
         {
           "type": "RotateComponent",
@@ -523,8 +522,7 @@
         {
           "type": "ModelComponent",
           "modelName": "fantasy/obj/SF_Env_Swamp_Tree_01.obj",
-          "materialName": "fantasy/fantasy.mtrl",
-          "enableDepth": true
+          "materialName": "fantasy/fantasy.mtrl"
         },
         {
           "type": "RotateComponent",

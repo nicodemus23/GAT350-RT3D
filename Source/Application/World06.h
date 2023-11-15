@@ -46,7 +46,7 @@ namespace nc
 
 		GLfloat m_radialBlurIntensity = 0.5f;
 		GLfloat m_blurQuality = 8.0f;
-		GLfloat m_blurSize = 16.0f;
+		GLfloat m_blurSize = 8.0f;
 		GLfloat m_blurDirections = 16.0f;
 
 

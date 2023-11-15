@@ -219,6 +219,9 @@
     <None Include="..\..\Build\Assets\Shaders\reflection.vert" />
     <None Include="..\..\Build\Assets\Shaders\refraction.prog" />
     <None Include="..\..\Build\Assets\Shaders\refraction.vert" />
+    <None Include="..\..\Build\Assets\Shaders\shadow_depth.frag" />
+    <None Include="..\..\Build\Assets\Shaders\shadow_depth.prog" />
+    <None Include="..\..\Build\Assets\Shaders\shadow_depth.vert" />
     <None Include="..\..\Build\Assets\Shaders\skybox.prog" />
     <None Include="..\..\Build\Assets\Shaders\skybox.vert" />
     <None Include="..\..\Build\Assets\Shaders\unlit_billboard.prog" />

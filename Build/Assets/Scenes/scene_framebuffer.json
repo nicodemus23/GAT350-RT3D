@@ -121,10 +121,9 @@
       "name": "actor4",
       "persistent": true,
       "active": true,
-      "enableDepth": false,
       "transform": {
-        "position": [ 0, 0, 0 ],
-        "rotation": [ 0, 0, 0 ],
+        "position": [ 0.2, 0.2, -0.6 ],
+        "rotation": [ 11, 24, 0 ],
         "scale": [ 1, 1, 1 ]
       },
       "components": [

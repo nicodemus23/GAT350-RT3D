@@ -39,6 +39,19 @@ uniform int textureHeight;
 uniform vec2 texelSize;
 uniform float blurIntensity;
 
+// for radial blur:
+float luminance(vec3 color) 
+    {
+        return dot(color, vec3(0.299, 0.587, 0.114));
+    }
+// keeps borders from bleeding in RadialBlur at high sampling size:
+vec2 handleBorders(vec2 uv) 
+{
+    uv = fract(uv); // Wrap the coordinates to keep them within [0, 1]
+    uv = mix(uv, 1.0 - uv, step(1.0, uv * 2.0)); // Reflect at borders
+    return uv;
+}
+
 // define kernel size for 3 x 3 gaussian blur:
 const float blurKernel[9] = float[](
 	1.0/16, 2.0/16, 1.0/16,
@@ -135,56 +148,7 @@ vec4 applyBlur5x5Kernel(in vec2 uv, in vec2 texelSize, float intensity) {
     return blurColor / totalWeight; // Normalize by the total weight
 }
 
-vec4 radialBlurOLD(in vec4 color, in vec2 uv, in vec2 texelSize, in float size, in float directions, in float quality, float intensity) {
 
-    if (intensity == 0) return texture(screenTexture, uv);
-
-    float Pi = 6.28318530718; // Pi*2 - full circle in radians
-    vec4 accumulatedColor = vec4(0.0);
-    float weightSum = 0.0;
-    vec2 radius = size * texelSize;
-
-   // for (float angle = 0.0; angle < Pi; angle += Pi / directions) {
-//        for (float i = 1.0 / quality; i <= 1.0; i += 1.0 / quality) {
-//        vec2 offset = vec2(cos(angle), sin(angle)) * radius * i;
-//        accumulatedColor += texture(screenTexture, uv + offset);
-//            weightSum += 1.0;
-
-// Debugging: Visualize the center point for radial blur in green
-    vec2 center = vec2(0.5, 0.5); // Assuming the center of blur is at the middle of the texture
-    if (distance(uv, center) < 0.01) { // Check if the current fragment is near the center
-        return vec4(0.0, 1.0, 0.0, 1.0); // Render it green
-    }
-
-        float angle = 0.0; 
-        float i = 1.0 / quality;
-        vec2 offset = vec2(cos(angle), sin(angle)) * radius * i;
-        if (length(offset) < 0.01) {
-        return vec4(0, 1, 0, 1);
-        }
-        accumulatedColor += texture(screenTexture, uv + offset);
-            weightSum += 1.0;
-        
-    
-
-    // clamp weightSum to avoid division by large values:
-    accumulatedColor /= weightSum;
-    weightSum = clamp(weightSum, 1.0, 100.0);
-
-    //return vec4(accumulatedColor.rgb, color.a);
-    return texture(screenTexture, uv); // Return the original texture color for now
-
-
-   // debug:
-  // vec4 debugTextureSample = texture(screenTexture, uv);
-   // original texture:
-  // return debugTextureSample;
-   // radius = size / texelSize;
-    // visualize radius as red and green components:
-   // return vec4(radius.s, radius.y, 0.0, 1.0);
-
-   //return vec4(weightSum / 100.0);
-}
 
 // Define the radialBlur function which takes several parameters:
 // color - the original color of the fragment
@@ -216,10 +180,15 @@ vec4 radialBlur(in vec4 color, in vec2 uv, in vec2 texelSize, in float size, in 
         for (float i = 1.0 / quality; i <= 1.0; i += 1.0 / quality) {
             // Calculate the offset for the current sample based on the angle and radius.
             vec2 offset = vec2(cos(angle), sin(angle)) * radius * i;
+            // convert each color to luminance before accumulating color and use that as weight. Image brightness is then maintained 
+            float lum = luminance(texture(screenTexture, uv + offset).rgb);
+
+            // clamp UV coordinates to texture bounds so that radial blur isn't sampling outside of the screen texture 
+            vec2 clampedUV = clamp(uv + offset, 0.0, 1.0);
             // Add the color at this offset to the accumulatedColor.
-            accumulatedColor += texture(screenTexture, uv + offset);
+            accumulatedColor += texture(screenTexture, clampedUV) *  lum;
             // Increment the weightSum for each sample taken.
-            weightSum += 1.0;
+            weightSum += lum;
         }
     }
 
@@ -267,10 +236,7 @@ void main()
 	vec4 basecolor = texture(screenTexture, ftexcoord); // (sampler2D, UV) 
 	// basecolor for post processing:
 	vec4 postprocess = basecolor;
-
-    // add grain to final output color:
    
-
 	// 0001 <--mask
 	// 0001 <--params
 

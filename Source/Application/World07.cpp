@@ -15,39 +15,26 @@ namespace nc
 		m_scene->Load("Scenes/scene_shadow.json");
 		m_scene->Initialize();
 
+		// create depth texture 
 		auto texture = std::make_shared<Texture>();
-		texture->CreateTexture(1024, 1024);
-		ADD_RESOURCE("fb_texture", texture);
+		texture->CreateDepthTexture(1024, 1024);
+		ADD_RESOURCE("depth_texture", texture);
 
+		// create depth buffer 
 		auto framebuffer = std::make_shared<Framebuffer>();
-		framebuffer->CreateFramebuffer(texture);
-		ADD_RESOURCE("fb", framebuffer);
+		framebuffer->CreateDepthBuffer(texture);
+		ADD_RESOURCE("depth_buffer", framebuffer);
 
-		auto material = GET_RESOURCE(Material, "Materials/postprocess.mtrl"); // use postprocess material to hold ...
+		//framebuffer = GET_RESOURCE(Framebuffer, "depth_buffer");
+
+		// set depth texture to debug
+		auto material = GET_RESOURCE(Material, "Materials/sprite.mtrl"); 
 		if (material)
 		{
 			material->albedoTexture = texture;
 		}
 
-
-		//{
-		//	auto actor = CREATE_CLASS(Actor);
-		//	actor->name = "light1";
-		//	actor->transform.position = glm::vec3{ 3, 3, 3 };
-		//	auto lightComponent = CREATE_CLASS(LightComponent);
-		//	lightComponent->type = LightComponent::eType::Point;
-		//	//lightComponent->color = glm::rgbColor(glm::vec3{ randomf() * 360, 1, 1 });
-		//	lightComponent->color = (glm::vec3 { 1, 1, 1 });
-		//	lightComponent->intensity = 1;
-		//	lightComponent->range = 20;
-		//	lightComponent->innerAngle = 10.0f;
-		//	lightComponent->outerAngle = 30.0f;
-		//	actor->AddComponent(std::move(lightComponent));
-		//	m_scene->Add(std::move(actor));
-		//}
-
-
-		{
+		/*{
 			auto actor = CREATE_CLASS(Actor);
 			actor->name = "camera1";
 			actor->transform.position = glm::vec3{ 0, 0, 18 };
@@ -65,7 +52,7 @@ namespace nc
 			actor->AddComponent(std::move(cameraController));
 
 			m_scene->Add(std::move(actor));
-		}
+		}*/
 
 		return true;
 	};
@@ -91,20 +78,33 @@ namespace nc
 	void World07::Draw(Renderer& renderer)
 	{
 		//// *** PASS 1 *** 
-		//m_scene->GetActorByName("postprocess")->active = false;
 
-		//auto framebuffer = GET_RESOURCE(Framebuffer, "fb");
-		//renderer.SetViewport(framebuffer->GetSize().x, framebuffer->GetSize().y);
-		//framebuffer->Bind();
+		auto framebuffer = GET_RESOURCE(Framebuffer, "depth_buffer");
+		renderer.SetViewport(framebuffer->GetSize().x, framebuffer->GetSize().y);
+		framebuffer->Bind();
 
-		//renderer.BeginFrame(glm::vec3{ 0.0f, 0, 0.0f });
-		//m_scene->Draw(renderer);
+		renderer.ClearDepth();
+		auto program = GET_RESOURCE(Program, "shaders/shadow_depth.prog");
+		program->Use(); // use shadow_depth as the current program 
 
-		//framebuffer->Unbind();
+		auto lights = m_scene->GetComponents<LightComponent>();
+		for (auto light : lights)
+		{	//
+			if (light->castShadow)
+			{
+				glm::mat4 shadowMatrix = light->GetShadowMatrix();
+				program->SetUniform("shadowVP", shadowMatrix);
+			}
+		}
+		// get all models in the scene
+		auto models = m_scene->GetComponents<ModelComponent>();
+		for (auto model : models)
+		{
+			program->SetUniform("model", model->m_owner->transform.GetMatrix());
+			model->model->Draw(); // model component->actual model with vertices->Draw();
+		}
 
-		//m_scene->GetActorByName("postprocess")->active = true;
-		//auto actor = m_scene->GetActorByName("cube");
-		//actor->active = true;
+		framebuffer->Unbind();
 
 		// *** PASS 2 ***
 		renderer.ResetViewport();
