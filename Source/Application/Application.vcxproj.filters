@@ -263,5 +263,11 @@
     <None Include="..\..\Build\Assets\Shaders\shadow_depth.vert">
       <Filter>Shaders</Filter>
     </None>
+    <None Include="..\..\Build\Assets\Materials\ui_light.mtrl">
+      <Filter>Materials</Filter>
+    </None>
+    <None Include="..\..\Build\Assets\Scenes\scene_lpn_shadow.json">
+      <Filter>Scenes</Filter>
+    </None>
   </ItemGroup>
 </Project>

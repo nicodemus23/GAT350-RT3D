@@ -12,7 +12,7 @@ namespace nc
 
 	{
 		m_scene = std::make_unique<Scene>();
-		m_scene->Load("Scenes/scene_shadow.json");
+		m_scene->Load("Scenes/scene_lpn_shadow.json");
 		m_scene->Initialize();
 
 		// create depth texture 
@@ -33,26 +33,12 @@ namespace nc
 		{
 			material->albedoTexture = texture;
 		}
-
-		/*{
-			auto actor = CREATE_CLASS(Actor);
-			actor->name = "camera1";
-			actor->transform.position = glm::vec3{ 0, 0, 18 };
-			actor->transform.rotation = glm::radians(glm::vec3{ 0, 180, 0 });
-
-			auto cameraComponent = CREATE_CLASS(CameraComponent);
-			cameraComponent->SetPerspective(70.0f, ENGINE.GetSystem<Renderer>()->GetWidth() / (float)ENGINE.GetSystem<Renderer>()->GetHeight(), 0.1f, 100.0f);
-			actor->AddComponent(std::move(cameraComponent));
-
-			auto cameraController = CREATE_CLASS(CameraController);
-			cameraController->speed = 5;
-			cameraController->sensitivity = 0.5f;
-			cameraController->m_owner = actor.get();
-			cameraController->Initialize();
-			actor->AddComponent(std::move(cameraController));
-
-			m_scene->Add(std::move(actor));
-		}*/
+		// get all of the materials 
+		auto materials = GET_RESOURCES(Material);
+		for (auto material : materials)
+		{	
+			material->depthTexture = texture;
+		}
 
 		return true;
 	};
@@ -99,12 +85,19 @@ namespace nc
 		// get all models in the scene
 		auto models = m_scene->GetComponents<ModelComponent>();
 		for (auto model : models)
-		{
-			program->SetUniform("model", model->m_owner->transform.GetMatrix());
-			model->model->Draw(); // model component->actual model with vertices->Draw();
+		{	// if this modelcomponent has a shadow...
+			if (model->castShadow)
+			{	
+				//glCullFace(GL_FRONT); // using the backface to use for sampling for the zbuffer 
+				//... go ahead and draw it
+				program->SetUniform("model", model->m_owner->transform.GetMatrix());
+				model->model->Draw(); // model component->actual model with vertices->Draw();
+			}
+			
 		}
 
-		framebuffer->Unbind();
+		// unbind when you want to render to the screen
+		framebuffer->Unbind(); 
 
 		// *** PASS 2 ***
 		renderer.ResetViewport();

@@ -10,11 +10,14 @@ in layout(location = 2) vec3 vnormal;
 out layout(location = 0) vec3 oposition;
 out layout(location = 1) vec3 onormal;
 out layout(location = 2) vec2 otexcoord;
+out layout(location = 3) vec4 oshadowcoord;
 
 // pass in model matrix from world - used to transform vertex positions and normals
 uniform mat4 model; 
 uniform mat4 view;
 uniform mat4 projection;
+
+uniform mat4 shadowVP;
 
 uniform struct Material
 {
@@ -42,6 +45,8 @@ void main()
 
 	// calculate texture coordinates, applying tiling and offset as defined in the material struct 
 	otexcoord = (vtexcoord * material.tiling) + material.offset;
+
+	oshadowcoord = shadowVP * model * vec4(vposition, 1.0);
 
 	// calculates the final position of the vertex in clip space and assigns to gl_Position
 	mat4 mvp = projection * view * model; 

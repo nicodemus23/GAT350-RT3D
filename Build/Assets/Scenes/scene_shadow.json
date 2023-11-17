@@ -34,8 +34,9 @@
       "active": true,
       "prototype": false,
       "transform": {
-        "position": [ 5.4, 2.9, 7.6 ],
-        "rotation": [ 175, 5, 0 ]
+        "position": [ 5.1, 4.9, -1.4 ],
+        "rotation": [ 166, 0, 0 ],
+        "scale": [1, 1, 1]
       },
       "components": [
         {
@@ -47,6 +48,11 @@
           "innerAngle": 10.0,
           "outerAngle": 30.0,
           "castShadow": true
+        },
+        {
+          "type": "ModelComponent",
+          "modelName": "models/quad.obj",
+          "materialName": "materials/ui_light.mtrl"
         }
       ]
     },

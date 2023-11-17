@@ -11,14 +11,15 @@
 #define NORMAL_TEXTURE_MASK		(1 << 2)
 #define EMISSIVE_TEXTURE_MASK	(1 << 3)
 
-in vec3 fposition; // will receive interpolated vertex positions for each fragment 
-in vec3 fnormal;
-in vec2 ftexcoord;
+in layout(location = 0) vec3 fposition; // will receive interpolated vertex positions for each fragment 
+in layout(location = 1) vec3 fnormal;
+in layout(location = 2) vec2 ftexcoord;
+in layout(location = 3) vec4 fshadowcoord;
 
 //in layout(location = 3) vec4 fcolor; 
 //flat in layout(location = 2) vec4 fcolor; // "flat" one mormal per polygon, one lighting computuation per polygon
 
-out vec4 ocolor; // this is the pixel we draw to the screen 
+out layout(location = 0) vec4 ocolor; // this is the pixel we draw to the screen 
 
 // this is bound to channel 0
 
@@ -50,11 +51,13 @@ float outerAngle;
 
 uniform vec3 ambientLight;
 uniform int numLights = 3;
+uniform float shadowBias = 0.005;
 
 layout(binding = 0) uniform sampler2D albedoTexture;
 layout(binding = 1) uniform sampler2D specularTexture;
 layout(binding = 2) uniform sampler2D normalTexture;
 layout(binding = 3) uniform sampler2D emissiveTexture;
+layout(binding = 5) uniform sampler2D shadowTexture;
 
 float attenuation(in vec3 position1, in vec3 position2, in float range)
 {
@@ -64,6 +67,11 @@ float attenuation(in vec3 position1, in vec3 position2, in float range)
 	attenuation = pow(attenuation, 2.0);
  
 	return attenuation;
+}
+
+float calculateShadow(vec4 shadowcoord, float bias)
+{
+	return texture(shadowTexture, shadowcoord.xy).x < shadowcoord.z  - shadowBias ? 0 : 1; // zero, you're in the shadow ,1 means you're in light 100%
 }
 void phong(in Light light, in vec3 position, in vec3 normal, out vec3 diffuse, out vec3 specular)
 {
@@ -87,9 +95,16 @@ void phong(in Light light, in vec3 position, in vec3 normal, out vec3 diffuse, o
 	specular = vec3(0);
 	if (intensity > 0) // checks whether the surface is facing the light source 
 	{
-		vec3 reflection = reflect(-lightDir, normal); // calculate reflection vector (which direction light bounces off surface)
+
 		vec3 viewDir = normalize(-position); // calc view dir vector (normalized vector pointing from frag position to camera)
-		float intensity = max(dot(reflection, viewDir), 0); // dot product of reflection vector and view direction (angle between ref vector and view vector)
+		// phong:
+		//vec3 reflection = reflect(-lightDir, normal); // calculate reflection vector (which direction light bounces off surface)
+		//float intensity = max(dot(reflection, viewDir), 0); // dot product of reflection vector and view direction (angle between ref vector and view vector)
+
+		// blinn-phong:
+		vec3 h = normalize(viewDir + lightDir); // normalize makes it a unit vector 
+		intensity = max(dot(h, normal), 0);
+
 		intensity = pow(intensity, material.shininess); // raise intensity to power of shininess setting in material 
 		specular = vec3(intensity * spotIntensity); // final specular color 
 	}
@@ -106,6 +121,7 @@ void main()
 
 	// set ambient light + emissive color // modulated by albedoColor
 	ocolor = vec4(ambientLight, 1) * albedoColor + emissiveColor;
+	float shadow = calculateShadow(fshadowcoord, shadowBias);
  
 	// set lights
 	for (int i = 0; i < numLights; i++)
@@ -116,7 +132,7 @@ void main()
 		float attenuation = (lights[i].type == DIRECTIONAL) ? 1 : attenuation(lights[i].position, fposition, lights[i].range);
  
 		phong(lights[i], fposition, fnormal, diffuse, specular);
-		ocolor += ((vec4(diffuse, 1) * albedoColor) + (vec4(specular, 1)) * specularColor) * lights[i].intensity * attenuation;
+		ocolor += ((vec4(diffuse, 1) * albedoColor) + (vec4(specular, 1)) * specularColor) * lights[i].intensity * attenuation * shadow;
 	}
 }
 	

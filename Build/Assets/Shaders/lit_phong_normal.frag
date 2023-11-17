@@ -14,6 +14,8 @@
 in layout(location = 0) vec3 fposition; // will receive interpolated vertex positions for each fragment 
 in layout(location = 1) vec2 ftexcoord;
 in layout(location = 2) mat3 ftbn;
+in layout(location = 5) vec4 fshadowcoord;
+
 
 out layout(location = 0) vec4 ocolor; // this is the pixel we draw to the screen 
 
@@ -47,6 +49,8 @@ float outerAngle;
 
 uniform vec3 ambientLight;
 uniform float ambientIntensity;
+uniform float shadowBias = 0.005;
+
 
 uniform int numLights = 3;
 
@@ -54,6 +58,8 @@ layout(binding = 0) uniform sampler2D albedoTexture;
 layout(binding = 1) uniform sampler2D specularTexture;
 layout(binding = 2) uniform sampler2D normalTexture;
 layout(binding = 3) uniform sampler2D emissiveTexture;
+layout(binding = 5) uniform sampler2D shadowTexture;
+
 
 float attenuation(in vec3 position1, in vec3 position2, in float range)
 {
@@ -64,6 +70,11 @@ float attenuation(in vec3 position1, in vec3 position2, in float range)
  
 	return attenuation;
 }
+float calculateShadow(vec4 shadowcoord, float bias)
+{
+	return texture(shadowTexture, shadowcoord.xy).x < shadowcoord.z  - shadowBias ? 0 : 1; // zero, you're in the shadow ,1 means you're in light 100%
+}
+
 void phong(in Light light, in vec3 position, in vec3 normal, out vec3 diffuse, out vec3 specular)
 {
 	// DIFFUSE lighting component based on the light direction and surface normal 
@@ -110,6 +121,8 @@ void main()
 
 	// set ambient light + emissive color // modulated by albedoColor and ambientIntensity (ambientIntensity is my addition)
 	ocolor = vec4(ambientLight * ambientIntensity, 1) * albedoColor + emissiveColor;
+	float shadow = calculateShadow(fshadowcoord, shadowBias);
+
  
 	// set lights
 	for (int i = 0; i < numLights; i++)
@@ -124,7 +137,7 @@ void main()
 		normal = normalize(ftbn * normal);
  
 		phong(lights[i], fposition, normal, diffuse, specular);
-		ocolor += ((vec4(diffuse, 1) * albedoColor) + (vec4(specular, 1)) * specularColor) * lights[i].intensity * attenuation;
+		ocolor += ((vec4(diffuse, 1) * albedoColor) + (vec4(specular, 1)) * specularColor) * lights[i].intensity * attenuation * shadow;
 	}
 	// outputs just the normal map for viewing 
 	//ocolor = vec4(texture(normalTexture, ftexcoord).rgb, 1);
