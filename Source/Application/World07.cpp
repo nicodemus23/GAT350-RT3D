@@ -17,7 +17,7 @@ namespace nc
 
 		// create depth texture 
 		auto texture = std::make_shared<Texture>();
-		texture->CreateDepthTexture(1024, 1024);
+		texture->CreateDepthTexture(4096, 4096);
 		ADD_RESOURCE("depth_texture", texture);
 
 		// create depth buffer 
@@ -28,7 +28,7 @@ namespace nc
 		//framebuffer = GET_RESOURCE(Framebuffer, "depth_buffer");
 
 		// set depth texture to debug
-		auto material = GET_RESOURCE(Material, "Materials/sprite.mtrl"); 
+		auto material = GET_RESOURCE(Material, "Materials/sprite.mtrl");
 		if (material)
 		{
 			material->albedoTexture = texture;
@@ -36,7 +36,7 @@ namespace nc
 		// get all of the materials 
 		auto materials = GET_RESOURCES(Material);
 		for (auto material : materials)
-		{	
+		{
 			material->depthTexture = texture;
 		}
 
@@ -55,7 +55,39 @@ namespace nc
 		ENGINE.GetSystem<Gui>()->BeginFrame();
 
 		m_scene->Update(dt);
-		m_scene->ProcessGui();		
+		m_scene->ProcessGui();
+
+		auto actor = m_scene->GetActorByName<Actor>("ogre");
+
+		// Get material for gear
+		auto material = actor->GetComponent<ModelComponent>()->material;
+
+		auto program = material->GetProgram();
+		if (!material) {
+			std::cerr << "Error: Material is null." << std::endl;
+			return;
+		}
+		program->Use();
+
+		material->ProcessGui();
+		material->Bind();
+
+		if (material)
+		{
+			ImGui::Begin("Ogre Normals");
+
+			material = GET_RESOURCE(Material, "materials/ogre.mtrl");
+			if (ImGui::SliderFloat("Normal Map Intensity Mult.", &m_normalMapIntensity, 0.0f, 2.0f))
+			{
+				program->SetUniform("normalMapIntensity", m_normalMapIntensity);
+			}
+
+			if (ImGui::SliderFloat("Normal Map Contrast", &m_normalMapContrast, 0.0f, 2.0f))
+			{
+				program->SetUniform("normalMapContrast", m_normalMapContrast);
+			}
+			ImGui::End();
+		}
 
 		ENGINE.GetSystem<Gui>()->EndFrame();
 
@@ -87,17 +119,17 @@ namespace nc
 		for (auto model : models)
 		{	// if this modelcomponent has a shadow...
 			if (model->castShadow)
-			{	
+			{
 				//glCullFace(GL_FRONT); // using the backface to use for sampling for the zbuffer 
 				//... go ahead and draw it
 				program->SetUniform("model", model->m_owner->transform.GetMatrix());
 				model->model->Draw(); // model component->actual model with vertices->Draw();
 			}
-			
+
 		}
 
 		// unbind when you want to render to the screen
-		framebuffer->Unbind(); 
+		framebuffer->Unbind();
 
 		// *** PASS 2 ***
 		renderer.ResetViewport();

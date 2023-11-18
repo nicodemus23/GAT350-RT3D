@@ -50,7 +50,8 @@ float outerAngle;
 uniform vec3 ambientLight;
 uniform float ambientIntensity;
 uniform float shadowBias = 0.005;
-
+uniform float normalMapIntensity = 1.0;
+uniform float normalMapContrast = 1.0;
 
 uniform int numLights = 3;
 
@@ -132,10 +133,26 @@ void main()
  
 		float attenuation = (lights[i].type == DIRECTIONAL) ? 1 : attenuation(lights[i].position, fposition, lights[i].range);
 
+		// get normal from the normal map
 		vec3 normal = texture(normalTexture, ftexcoord).rgb;
-		normal = (normal * 2); // (0 - 1) -> (-1 - 1)
-		normal = normalize(ftbn * normal);
+		// transform normal map from [0, 1] to [-1, 1]
+		normal = (normal * 2 - 1.0); // new value = original value * 2 - 1 // -1 ->1 is suitable for normal lighting calculations // -1 = normal pointing negative direction to surface, 0 = perp. to surface, 1 = positive direction
+		normal = mix(vec3(0.5), normal, normalMapContrast); // apply contrast 
+		normal = normal * normalMapIntensity; // apply intensity
+		// normalize the normal
+		normal = normalize(ftbn * normal); // transform to world space 
+
+		// DEBUG NORMAL MAP: 
+		//ocolor = vec4(normal * 0.5 + 0.5, 1); // Convert from [-1,1] to [0,1] range for display
+
+		// Visualize the normalMapIntensity by setting it as the red channel
+		// and displaying the modified normal in the green and blue channels:
+		//ocolor = vec4(normalMapIntensity, normal.yz * 0.5 + 0.5, 1);
+
+		// Visualize the intensity as a grayscale color:
+		//ocolor = vec4(vec3(normalMapIntensity), 1.0);
  
+		// regular output:
 		phong(lights[i], fposition, normal, diffuse, specular);
 		ocolor += ((vec4(diffuse, 1) * albedoColor) + (vec4(specular, 1)) * specularColor) * lights[i].intensity * attenuation * shadow;
 	}

@@ -43,6 +43,10 @@ namespace nc
 		float m_blurIntensity = 0.0f;
 		float m_blur5x5Intensity = 0.0f;
 
+		//shader uniforms
+		float m_normalMapIntensity = 1.0f;
+		float m_normalMapContrast = 1.0f;
+
 		int m_textureWidth;
 		int m_textureHeight;
 

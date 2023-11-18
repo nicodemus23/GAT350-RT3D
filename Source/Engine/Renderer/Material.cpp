@@ -85,6 +85,8 @@ namespace nc
 		m_program->SetUniform("material.emissive", emissive);
 		m_program->SetUniform("material.tiling", tiling);
 		m_program->SetUniform("material.offset", offset);
+	/*	m_program->SetUniform("material.normalMapIntensity", normalMapIntensity);
+		m_program->SetUniform("material.normalMapContrast", normalMapContrast);*/
 
 		if (albedoTexture)
 		{
@@ -131,6 +133,9 @@ namespace nc
 		ImGui::ColorEdit4("Emissive", glm::value_ptr(emissive));
 		ImGui::DragFloat2("Tiling", glm::value_ptr(tiling), 0.1f);
 		ImGui::DragFloat2("Offset", glm::value_ptr(offset), 0.1f);
+		/*ImGui::DragFloat("Normal Map Intensity Mult.", &normalMapIntensity, 1.0f, 0.0f,  2.0f);
+		ImGui::DragFloat("Normal Map Contrast", &normalMapContrast, 1.0f, 0.0f,  2.0f);*/
+
 
 		ImGui::End();
 	}

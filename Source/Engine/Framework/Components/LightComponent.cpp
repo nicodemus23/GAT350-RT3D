@@ -91,5 +91,7 @@ namespace nc
 		READ_DATA(value, innerAngle);
 		READ_DATA(value, outerAngle);
 		READ_DATA(value, castShadow);
+		READ_DATA(value, shadowBias);
+		READ_DATA(value, shadowSize);
 	}
 }

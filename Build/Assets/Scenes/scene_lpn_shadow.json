@@ -7,7 +7,7 @@
       "active": true,
       "prototype": false,
       "transform": {
-        "position": [ 5.2, 2.4, 4.2 ],
+        "position": [ 5.2, 2.4, 2.4 ],
         "scale": [ 1, 1, 1 ],
         "rotation": [ 0, 0, 0 ]
       },
@@ -34,8 +34,8 @@
       "active": true,
       "prototype": false,
       "transform": {
-        "position": [ 5.1, 4.9, -1.4 ],
-        "rotation": [ 166, 0, 0 ],
+        "position": [ 1.7, 6.5, 3.4 ],
+        "rotation": [ 151, 0, 0 ],
         "scale": [ 1, 1, 1 ]
       },
       "components": [
@@ -47,7 +47,9 @@
           "range": 35.0,
           "innerAngle": 10.0,
           "outerAngle": 30.0,
-          "castShadow": true
+          "castShadow": true,
+          "shadowSize": 13.7,
+          "shadowBias": 0.002
         },
         {
           "type": "ModelComponent",
@@ -93,6 +95,24 @@
           "type": "ModelComponent",
           "modelName": "models/ogre.obj",
           "materialName": "materials/ogre.mtrl"
+        }
+      ]
+    },
+    {
+      "type": "Actor",
+      "name": "gear",
+      "persistent": true,
+      "active": false,
+      "transform": {
+        "position": [ 5.3, 1.8, -1.1 ],
+        "rotation": [ 0, -55, 0 ],
+        "scale": [ 0.2, 0.2, 0.2 ]
+      },
+      "components": [
+        {
+          "type": "ModelComponent",
+          "modelName": "models/Gear1.obj",
+          "materialName": "materials/gear1.mtrl"
         }
       ]
     }

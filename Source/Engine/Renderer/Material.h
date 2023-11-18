@@ -45,6 +45,8 @@ namespace nc
 
 		glm::vec2 tiling{ 1, 1 }; // uv - st
 		glm::vec2 offset{ 0, 0 };
+		float normalMapIntensity = 1.0f;
+		float normalMapContrast = 1.0f;
 
 		res_t<Texture> albedoTexture;
 		res_t<Texture> specularTexture;
