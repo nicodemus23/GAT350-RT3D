@@ -1,0 +1,138 @@
+{
+  "actors": [
+    {
+      "type": "Actor",
+      "name": "camera1",
+      "persistent": true,
+      "active": true,
+      "prototype": false,
+      "transform": {
+        "position": [ 5.2, 2.4, 2.4 ],
+        "scale": [ 1, 1, 1 ],
+        "rotation": [ 0, 0, 0 ]
+      },
+      "components": [
+        {
+          "type": "CameraComponent",
+          "fov": 70.0,
+          "aspect": 1.78,
+          "near": 0.1,
+          "far": 100.0,
+          "size": 8
+        },
+        {
+          "type": "CameraController",
+          "speed": 0.1,
+          "sensitivity": 3.0
+        }
+      ]
+    },
+    {
+      "type": "Actor",
+      "name": "light1",
+      "persistent": true,
+      "active": true,
+      "prototype": false,
+      "transform": {
+        "position": [ 1.7, 6.5, 3.4 ],
+        "rotation": [ 151, 0, 0 ],
+        "scale": [ 1, 1, 1 ]
+      },
+      "components": [
+        {
+          "type": "LightComponent",
+          "lightType": "directional",
+          "color": [ 1, 1, 1 ],
+          "intensity": 1.0,
+          "range": 35.0,
+          "innerAngle": 10.0,
+          "outerAngle": 30.0,
+          "castShadow": true,
+          "shadowSize": 13.7,
+          "shadowBias": 0.002
+        },
+        {
+          "type": "ModelComponent",
+          "modelName": "models/quad.obj",
+          "materialName": "materials/ui_light.mtrl"
+        }
+      ]
+    },
+    {
+      "type": "Actor",
+      "name": "ground",
+      "persistent": true,
+      "active": true,
+      "transform": {
+        "position": [ -3.9, 0, 0 ],
+        "rotation": [ 0, 0, 0 ],
+        "scale": [ 2.0, 2.0, 2.0 ]
+      },
+      "components": [
+        {
+          "type": "ModelComponent",
+          "modelName": "fantasy/obj/SF_Env_Tile_Dirt_01.obj",
+          "materialName": "fantasy/fantasy.mtrl"
+        },
+        {
+          "type": "RotateComponent",
+          "euler": [ 0.0, 0.0, 0.0 ]
+        }
+      ]
+    },
+    {
+      "type": "Actor",
+      "name": "ogre",
+      "persistent": true,
+      "active": true,
+      "transform": {
+        "position": [ 3.2, 3.6, -1.8 ],
+        "rotation": [ 17.0, 0, 0 ],
+        "scale": [ 2, 2, 2 ]
+      },
+      "components": [
+        {
+          "type": "ModelComponent",
+          "modelName": "models/ogre.obj",
+          "materialName": "materials/ogre.mtrl"
+        }
+      ]
+    },
+    {
+      "type": "Actor",
+      "name": "gear",
+      "persistent": true,
+      "active": true,
+      "transform": {
+        "position": [ 5.3, 1.8, -1.1 ],
+        "rotation": [ 0, -55, 0 ],
+        "scale": [ 0.2, 0.2, 0.2 ]
+      },
+      "components": [
+        {
+          "type": "ModelComponent",
+          "modelName": "models/Gear1.obj",
+          "materialName": "materials/gear1.mtrl"
+        }
+      ]
+    },
+    {
+      "type": "Actor",
+      "name": "sphere",
+      "persistent": true,
+      "active": true,
+      "transform": {
+        "position": [ 5.3, 1.8, -1.1 ],
+        "rotation": [ 0, -55, 0 ],
+        "scale": [ 0.2, 0.2, 0.2 ]
+      },
+      "components": [
+        {
+          "type": "ModelComponent",
+          "modelName": "models/sphere.obj",
+          "materialName": "materials/sphere.mtrl"
+        }
+      ]
+    }
+  ]
+}

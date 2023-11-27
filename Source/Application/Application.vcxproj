@@ -147,6 +147,7 @@
     <ClCompile Include="World05.cpp" />
     <ClCompile Include="World06.cpp" />
     <ClCompile Include="World07.cpp" />
+    <ClCompile Include="World08.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Engine\Core\Core.vcxproj">
@@ -170,9 +171,11 @@
     <ClInclude Include="World05.h" />
     <ClInclude Include="World06.h" />
     <ClInclude Include="World07.h" />
+    <ClInclude Include="World08.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Build\Assets\Fantasy\fantasy.mtrl" />
+    <None Include="..\..\Build\Assets\Materials\basic.mtrl" />
     <None Include="..\..\Build\Assets\Materials\Craniu.mtl" />
     <None Include="..\..\Build\Assets\Materials\framebuffer.mtrl" />
     <None Include="..\..\Build\Assets\Materials\gear1.mtrl" />
@@ -189,15 +192,21 @@
     <None Include="..\..\Build\Assets\Materials\skull.mtrl" />
     <None Include="..\..\Build\Assets\Materials\skull_refraction.mtrl" />
     <None Include="..\..\Build\Assets\Materials\skybox.mtrl" />
+    <None Include="..\..\Build\Assets\Materials\sphere.mtrl" />
     <None Include="..\..\Build\Assets\Materials\spot.mtrl" />
     <None Include="..\..\Build\Assets\Materials\sprite.mtrl" />
     <None Include="..\..\Build\Assets\Materials\tree.mtrl" />
+    <None Include="..\..\Build\Assets\Materials\ui_camera.mtrl" />
     <None Include="..\..\Build\Assets\Materials\ui_light.mtrl" />
     <None Include="..\..\Build\Assets\Scenes\scene.json" />
+    <None Include="..\..\Build\Assets\Scenes\scene_editor.json" />
     <None Include="..\..\Build\Assets\Scenes\scene_framebuffer.json" />
     <None Include="..\..\Build\Assets\Scenes\scene_lpn_shadow.json" />
     <None Include="..\..\Build\Assets\Scenes\scene_shadow.json" />
+    <None Include="..\..\Build\Assets\Scenes\scene_shadow_cel.json" />
     <None Include="..\..\Build\Assets\Shaders\cubemap.frag" />
+    <None Include="..\..\Build\Assets\Shaders\lit_cel.frag" />
+    <None Include="..\..\Build\Assets\Shaders\lit_cel.prog" />
     <None Include="..\..\Build\Assets\Shaders\lit_phong.frag" />
     <None Include="..\..\Build\Assets\Shaders\lit_phong.prog" />
     <None Include="..\..\Build\Assets\Shaders\lit_phong.vert" />

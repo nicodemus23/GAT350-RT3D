@@ -47,6 +47,8 @@ namespace nc
 			return false;
 		}
 
+		resource->name = lname;
+
 		// map : key pair
 		m_resources[lname] = resource;
 

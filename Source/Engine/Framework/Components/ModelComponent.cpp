@@ -44,6 +44,12 @@ namespace nc
 
 	void ModelComponent::ProcessGui()
 	{
+		(model) ? ImGui::Text("Model: %s", model->name.c_str()) : ImGui::Text("None");
+		Gui::GetDialogueResource<Model>(model, "ModelTextureDialog", "Open Model", "Model file (*.obj;*.fbx){.obj,.fbx},.*");
+
+		(material) ? ImGui::Text("Material: %s", material->name.c_str()) : ImGui::Text("None");
+		Gui::GetDialogueResource<Material>(material, "MaterialTextureDialog", "Open Material", "Material file (*.mtrl){.mtrl},.*");
+
 		ImGui::Checkbox("Cast Shadow", &castShadow); // & is because it wants a pointer because it's changing value, not just referencing it 
 		ImGui::Checkbox("Enable Depth", &enableDepth);
 	}

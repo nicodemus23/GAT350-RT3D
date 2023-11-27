@@ -1,5 +1,5 @@
 {
-  "program": "shaders/lit_phong_normal.prog",
+  "program": "shaders/lit_cel.prog",
   "albedoTexture": "Textures/Gear_1_Textures/Gear_1_BaseColor.png",
   "normalTexture": "Textures/Gear_1_Textures/Gear_1_Normal.png",
   "specularTexture": "Textures/Gear_1_Textures/Gear_1_Specular.png",
@@ -14,6 +14,11 @@
     0
   ],
   "shininess": 10,
+  "emissive": [
+    0.0,
+    0.0,
+    0.0
+  ],
   "tiling": [ 1, 1 ],
   "offset": [ 0, 0 ]
 }

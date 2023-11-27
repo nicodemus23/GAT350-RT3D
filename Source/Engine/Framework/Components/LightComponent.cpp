@@ -14,8 +14,11 @@ namespace nc
 	{
 	}
 
-	void LightComponent::SetProgram(const res_t<Program> program, const std::string& name)
+	void LightComponent::SetProgram(const res_t<Program> program, const std::string& name, glm::mat4& view)
 	{
+		// transform light position and direction to camera space
+		glm::vec3 position = glm::vec3(view * glm::vec4(m_owner->transform.position, 1));
+		glm::vec3 direction = glm::vec3(view * glm::vec4(m_owner->transform.Forward(), 0));
 		program->SetUniform(name + ".type", type);
 		program->SetUniform(name + ".position", m_owner->transform.position);
 		program->SetUniform(name + ".direction", m_owner->transform.Forward());

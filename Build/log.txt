@@ -5,8 +5,17 @@ INFO: Factory.h(74) Class registered: EnginePhysicsComponent
 INFO: Factory.h(74) Class registered: CameraController
 INFO: Factory.h(74) Class registered: CameraComponent
 INFO: Factory.h(74) Class registered: Actor
-INFO: Main.cpp(18) Motor Initialisieren, bruh...
+INFO: Main.cpp(19) Motor Initialisieren, bruh...
 INFO: RotateComponent.cpp(29) euler angles parsed from json successfully
+INFO: Factory.h(82) Prototype Class registered: Camera
+INFO: Factory.h(82) Prototype Class registered: Light
+INFO: Factory.h(82) Prototype Class registered: Sphere
+INFO: Factory.h(82) Prototype Class registered: Cube
+WARNING: Program.cpp(165) Could not find uniform location: material.specular
+WARNING: Program.cpp(165) Could not find uniform location: material.shininess
+WARNING: Program.cpp(165) Could not find uniform location: material.normalMapIntensity
+WARNING: Program.cpp(165) Could not find uniform location: material.normalMapContrast
+WARNING: Program.cpp(165) Could not find uniform location: ambientIntensity
 WARNING: Program.cpp(165) Could not find uniform location: ambientIntensity
 WARNING: Program.cpp(165) Could not find uniform location: view
 WARNING: Program.cpp(165) Could not find uniform location: projection
@@ -39,3 +48,9 @@ WARNING: Program.cpp(165) Could not find uniform location: material.params
 WARNING: Program.cpp(165) Could not find uniform location: material.specular
 WARNING: Program.cpp(165) Could not find uniform location: material.shininess
 WARNING: Program.cpp(165) Could not find uniform location: material.emissive
+WARNING: Program.cpp(165) Could not find uniform location: material.normalMapIntensity
+WARNING: Program.cpp(165) Could not find uniform location: material.normalMapContrast
+WARNING: Program.cpp(165) Could not find uniform location: material.normalMapIntensity
+WARNING: Program.cpp(165) Could not find uniform location: material.normalMapContrast
+WARNING: Texture.cpp(92) No data. Could not create surface: textures/camera.png
+WARNING: ResourceManager.h(75) Could not create resource: textures/camera.png

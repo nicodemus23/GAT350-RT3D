@@ -1,5 +1,5 @@
 {
-  "program": "shaders/lit_phong_normal.prog",
+  "program": "shaders/lit_cel.prog",
   "albedoTexture": "Textures/OgreTextures/ogre_diffuse.bmp",
   "emissiveTexture": "Textures/OgreTextures/ogre_emissive.bmp",
   "normalTexture": "Textures/OgreTextures/ogre_normal.bmp",

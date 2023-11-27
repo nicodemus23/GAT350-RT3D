@@ -14,6 +14,7 @@ namespace nc
 
 	void Scene::Update(float dt)
 	{
+		m_dt = dt;
 		// update and remove destroyed actors
 		auto iter = m_actors.begin();
 		while (iter != m_actors.end())
@@ -50,8 +51,8 @@ namespace nc
 			{
 				std::string name = "lights[" + std::to_string(index++) + "]";
 
-
-				light->SetProgram(program, name);
+				glm::mat4 view = (camera) ? camera->view : glm::mat4(1);
+				light->SetProgram(program, name, view);
 			}
 
 
@@ -83,6 +84,20 @@ namespace nc
 		while (iter != m_actors.end())
 		{
 			(force || !(*iter)->persistent) ? iter = m_actors.erase(iter) : iter++;
+		}
+	}
+
+	void Scene::Remove(Actor* actor)
+	{
+		auto iter = m_actors.begin();
+		while (iter != m_actors.end())
+		{
+			if ((*iter).get() == actor)
+			{
+				m_actors.erase(iter);
+				break;
+			}
+			iter++;
 		}
 	}
 
@@ -127,33 +142,19 @@ namespace nc
 	}
 
 	void Scene::ProcessGui()
-	{
-		ImGui::Begin("Scene");
+	{	// 1 frame per second
+		float fps = 1 / m_dt;
+		// milliseconds
+		float ms = 1000 * m_dt;
+
+		ImVec4 color = (fps < 30) ? ImVec4{ 1, 0, 1, 1 } : ImVec4{ 1, 1, 1, 1 };
+		ImGui::TextColored(color, "%.2f FPS (%.2f)", fps, ms); 
 		ImGui::ColorEdit3("Ambient", glm::value_ptr(ambientColor));
 		ImGui::SliderFloat("Ambient Intensity", &ambientIntensity, 0.0f, 1.0f);
-		ImGui::Separator();
 
 
 
-		for (auto& actor : m_actors)
-		{
-			if (ImGui::Selectable(actor->name.c_str(), actor->guiSelect))
-			{	// lambda function - search all objects in m_actors list from beginning to end - auto& a is first actor - for each actor that isn't selected in gui set to "false" - set selected to "true"
-				std::for_each(m_actors.begin(), m_actors.end(), [](auto& a) { a->guiSelect = false; });
-				actor->guiSelect = true;
-			}
-		}
-		ImGui::End();
-
-
-		// uses Selectable lambda function result from above - iterator is pointer to the object 
-		ImGui::Begin("Inspector");
-		auto iter = std::find_if(m_actors.begin(), m_actors.end(), [](auto& a) { return a->guiSelect; });
-		if (iter != m_actors.end())
-		{
-			(*iter)->ProcessGui();
-		}
-		ImGui::End();
+	
 	}
 
 }
