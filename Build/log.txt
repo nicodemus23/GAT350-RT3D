@@ -52,5 +52,3 @@ WARNING: Program.cpp(165) Could not find uniform location: material.normalMapInt
 WARNING: Program.cpp(165) Could not find uniform location: material.normalMapContrast
 WARNING: Program.cpp(165) Could not find uniform location: material.normalMapIntensity
 WARNING: Program.cpp(165) Could not find uniform location: material.normalMapContrast
-WARNING: Texture.cpp(92) No data. Could not create surface: textures/camera.png
-WARNING: ResourceManager.h(75) Could not create resource: textures/camera.png

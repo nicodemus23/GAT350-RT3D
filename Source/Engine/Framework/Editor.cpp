@@ -1,6 +1,7 @@
 #include "Editor.h"
 #include "Scene.h";
 #include "Framework/Components/CameraComponent.h";
+#include "Framework/Components/LightComponent.h";
 
 namespace nc
 {
@@ -16,14 +17,91 @@ namespace nc
 
 		// show resources
 		ImGui::Begin("Resources");
-		auto resources = GET_RESOURCES(Resource); // grab all of the resources in the scene 
-		for (auto& resource : resources) // & so it doesn't make a copy 
-		{	// if selected ...
-			if (ImGui::Selectable(resource->name.c_str(), resource.get() == m_selected)) // get raw pointer to resource (.get) and if it's equal to m_selected
-			{
-				m_selected = resource.get();
+
+
+		//auto resources = GET_RESOURCES(Resource); // grab all of the resources in the scene 
+		//for (auto& resource : resources) // & so it doesn't make a copy 
+		//{	// if selected ...
+		//	if (ImGui::Selectable(resource->name.c_str(), resource.get() == m_selected)) // get raw pointer to resource (.get) and if it's equal to m_selected
+		//	{
+		//		m_selected = resource.get();
+		//	}
+		//}
+		// 
+		// models
+		if (ImGui::CollapsingHeader("Models"))
+		{
+			auto models = GET_RESOURCES(Model); // grab all of the resources in the scene 
+			for (auto& model : models) // & so it doesn't make a copy 
+			{	// if selected ...
+				if (ImGui::Selectable(model->name.c_str(), model.get() == m_selected)) // get raw pointer to resource (.get) and if it's equal to m_selected
+				{
+					m_selected = model.get();
+				}
 			}
 		}
+
+		// textures
+		if (ImGui::CollapsingHeader("Textures"))
+		{
+			auto textures = GET_RESOURCES(Texture); // grab all of the resources in the scene 
+			for (auto& texture : textures) // & so it doesn't make a copy 
+			{	// if selected ...
+				if (ImGui::Selectable(texture->name.c_str(), texture.get() == m_selected)) // get raw pointer to resource (.get) and if it's equal to m_selected
+				{
+					m_selected = texture.get();
+				}
+			}
+		}
+
+		// materials
+		if (ImGui::CollapsingHeader("Materials"))
+		{
+			auto materials = GET_RESOURCES(Material); // grab all of the resources in the scene 
+			for (auto& material : materials) // & so it doesn't make a copy 
+			{	// if selected ...
+				if (ImGui::Selectable(material->name.c_str(), material.get() == m_selected)) // get raw pointer to resource (.get) and if it's equal to m_selected
+				{
+					m_selected = material.get();
+				}
+			}
+		}
+
+		// shaders
+		if (ImGui::CollapsingHeader("Shaders"))
+		{
+			auto shaders = GET_RESOURCES(Shader); // grab all of the resources in the scene 
+			for (auto& shader : shaders) // & so it doesn't make a copy 
+			{	// if selected ...
+				if (ImGui::Selectable(shader->name.c_str(), shader.get() == m_selected)) // get raw pointer to resource (.get) and if it's equal to m_selected
+				{
+					m_selected = shader.get();
+				}
+			}
+		}
+
+		// lights
+		if (ImGui::CollapsingHeader("Lights"))
+		{
+			for (auto& actor : scene->m_actors)
+			{
+				// Check if the actor has a LightComponent
+				LightComponent* lightComp = actor->GetComponent<LightComponent>();
+				if (lightComp)
+				{
+					// Use the actor's name for listing
+					if (ImGui::Selectable(actor->name.c_str(), actor.get() == m_selected))
+					{
+						m_selected = actor.get(); // Select the actor
+					}
+				}
+			}
+		}
+
+		
+
+
+		
 
 		ImGui::End();
 		// show scene

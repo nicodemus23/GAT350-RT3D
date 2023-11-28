@@ -15,5 +15,6 @@ namespace nc
 	private:
 		class Object* m_selected = nullptr;
 		bool m_active = true;
+		class Component* m_selectedLight = nullptr;
 	};
 }
