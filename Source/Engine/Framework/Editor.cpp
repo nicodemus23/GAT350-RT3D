@@ -3,6 +3,7 @@
 #include "Framework/Components/CameraComponent.h";
 #include "Framework/Components/LightComponent.h";
 
+
 namespace nc
 {
 	void Editor::Update()
@@ -19,15 +20,7 @@ namespace nc
 		ImGui::Begin("Resources");
 
 
-		//auto resources = GET_RESOURCES(Resource); // grab all of the resources in the scene 
-		//for (auto& resource : resources) // & so it doesn't make a copy 
-		//{	// if selected ...
-		//	if (ImGui::Selectable(resource->name.c_str(), resource.get() == m_selected)) // get raw pointer to resource (.get) and if it's equal to m_selected
-		//	{
-		//		m_selected = resource.get();
-		//	}
-		//}
-		// 
+
 		// models
 		if (ImGui::CollapsingHeader("Models"))
 		{

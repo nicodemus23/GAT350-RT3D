@@ -294,7 +294,7 @@ namespace nc
 	void World06::Draw(Renderer& renderer)
 	{
 		// *** PASS 1 *** 
-		m_scene->GetActorByName("postprocess")->active = false;
+		m_scene->GetActorByName("postprocess")->active = true;
 
 		auto framebuffer = GET_RESOURCE(Framebuffer, "fb");
 		renderer.SetViewport(framebuffer->GetSize().x, framebuffer->GetSize().y);
@@ -305,7 +305,7 @@ namespace nc
 
 		framebuffer->Unbind();
 
-		m_scene->GetActorByName("postprocess")->active = true;
+		m_scene->GetActorByName("postprocess")->active = false;
 		//auto actor = m_scene->GetActorByName("cube");
 		//actor->active = true;
 

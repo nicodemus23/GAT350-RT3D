@@ -64,7 +64,7 @@
       "persistent": true,
       "active": true,
       "transform": {
-        "position": [ -3.9, 0, 0 ],
+        "position": [ -3.9, 1.2, 5 ],
         "rotation": [ 0, 0, 0 ],
         "scale": [ 2.0, 2.0, 2.0 ]
       },
@@ -84,7 +84,7 @@
       "type": "Actor",
       "name": "ogre",
       "persistent": true,
-      "active": true,
+      "active": false,
       "transform": {
         "position": [ 3.2, 3.6, -1.8 ],
         "rotation": [ 17.0, 0, 0 ],
@@ -100,37 +100,37 @@
     },
     {
       "type": "Actor",
-      "name": "gear",
+      "name": "Spiderman",
       "persistent": true,
       "active": true,
       "transform": {
-        "position": [ 5.3, 1.8, -1.1 ],
-        "rotation": [ 0, -55, 0 ],
-        "scale": [ 0.2, 0.2, 0.2 ]
+        "position": [ 5.2, 2.65, 0.6 ],
+        "rotation": [ -46, 29, 0 ],
+        "scale": [ 10, 10, 10 ]
       },
       "components": [
         {
           "type": "ModelComponent",
-          "modelName": "models/Gear1.obj",
-          "materialName": "materials/gear1.mtrl"
+          "modelName": "models/Spiderman_Pose_2_01.obj",
+          "materialName": "materials/spiderman.mtrl"
         }
       ]
     },
     {
       "type": "Actor",
-      "name": "sphere",
+      "name": "car",
       "persistent": true,
       "active": true,
       "transform": {
-        "position": [ 5.3, 1.8, -1.1 ],
-        "rotation": [ 0, -55, 0 ],
-        "scale": [ 0.2, 0.2, 0.2 ]
+        "position": [ 6.4, 2.05, -1.3 ],
+        "rotation": [ 0, -127, 0 ],
+        "scale": [ 0.04, 0.04, 0.04 ]
       },
       "components": [
         {
           "type": "ModelComponent",
-          "modelName": "models/sphere.obj",
-          "materialName": "materials/sphere.mtrl"
+          "modelName": "models/diplomat_police2.fbx",
+          "materialName": "materials/police_car.mtrl"
         }
       ]
     }

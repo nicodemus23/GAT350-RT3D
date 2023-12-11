@@ -185,6 +185,7 @@
     <None Include="..\..\Build\Assets\Materials\ogre.mtrl" />
     <None Include="..\..\Build\Assets\Materials\ogre_norm_refl.mtrl" />
     <None Include="..\..\Build\Assets\Materials\phong.mtrl" />
+    <None Include="..\..\Build\Assets\Materials\police_car.mtrl" />
     <None Include="..\..\Build\Assets\Materials\postprocess.mtrl" />
     <None Include="..\..\Build\Assets\Materials\quad.mtrl" />
     <None Include="..\..\Build\Assets\Materials\reflection.mtrl" />
@@ -193,6 +194,7 @@
     <None Include="..\..\Build\Assets\Materials\skull_refraction.mtrl" />
     <None Include="..\..\Build\Assets\Materials\skybox.mtrl" />
     <None Include="..\..\Build\Assets\Materials\sphere.mtrl" />
+    <None Include="..\..\Build\Assets\Materials\spiderman.mtrl" />
     <None Include="..\..\Build\Assets\Materials\spot.mtrl" />
     <None Include="..\..\Build\Assets\Materials\sprite.mtrl" />
     <None Include="..\..\Build\Assets\Materials\tree.mtrl" />

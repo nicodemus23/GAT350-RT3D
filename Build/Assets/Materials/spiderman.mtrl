@@ -1,0 +1,23 @@
+{
+  "program": "shaders/lit_cel.prog",
+  "albedoTexture": "Textures/Spiderman_Textures/Spiderman_Pose_2_01_1.jpg",
+  "normalTexture": "Textures/Spiderman_Textures/Spiderman_Pose_2_normal.jpg",
+  "albedo": [
+    1,
+    1,
+    1
+  ],
+  "specular": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "shininess": 2,
+  "emissive": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "tiling": [ 1, 1 ],
+  "offset": [ 0, 0 ]
+}

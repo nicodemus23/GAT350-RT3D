@@ -1,0 +1,23 @@
+{
+  "program": "shaders/lit_cel.prog",
+  "albedoTexture": "Textures/PoliceCar_Textures/Material_1076_Base_Color.png",
+  "normalTexture": "Textures/PoliceCar_Textures/Material_1076_normal.png",
+  "albedo": [
+    1,
+    1,
+    1
+  ],
+  "specular": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "shininess": 2,
+  "emissive": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "tiling": [ 1, 1 ],
+  "offset": [ 0, 0 ]
+}
